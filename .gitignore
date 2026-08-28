@@ -4,6 +4,7 @@ node_modules/
 *.tsbuildinfo
 .env
 .env.*
+!.env.example
 dist/
 coverage/
 data/
