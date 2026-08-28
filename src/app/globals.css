@@ -1,0 +1,96 @@
+@import "@fontsource-variable/manrope";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/600.css";
+@import "tailwindcss";
+
+:root {
+  --canvas: #f4f2ec;
+  --surface: #fffdf8;
+  --surface-strong: #ffffff;
+  --ink: #142132;
+  --ink-muted: #5d6875;
+  --navy: #14304f;
+  --blue: #1769aa;
+  --blue-soft: #dceefa;
+  --green: #16715a;
+  --line: #d9ddd9;
+  --line-strong: #bdc6c6;
+  --focus: #ffbf47;
+  --shadow: 0 18px 50px rgba(20, 48, 79, 0.1);
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: "Manrope Variable", system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(20, 48, 79, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 48, 79, 0.035) 1px, transparent 1px),
+    var(--canvas);
+  background-size: 32px 32px;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 50;
+  transform: translateY(-180%);
+  border-radius: 0.5rem;
+  background: var(--ink);
+  color: white;
+  padding: 0.75rem 1rem;
+  transition: transform 160ms var(--ease-out);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+::selection {
+  background: var(--blue-soft);
+  color: var(--navy);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

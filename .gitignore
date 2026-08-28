@@ -1,7 +1,11 @@
 .superpowers/
 node_modules/
+.next/
+*.tsbuildinfo
 .env
 .env.*
 dist/
 coverage/
-
+data/
+playwright-report/
+test-results/
