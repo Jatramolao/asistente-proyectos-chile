@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { authClient } from "@/server/auth-client";
 
@@ -9,6 +10,7 @@ type AuthFormProps = {
 };
 
 export function AuthForm({ mode }: AuthFormProps) {
+  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const isSignUp = mode === "sign-up";
@@ -37,7 +39,8 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    window.location.assign("/proyectos");
+    router.push("/proyectos");
+    router.refresh();
   }
 
   return (
