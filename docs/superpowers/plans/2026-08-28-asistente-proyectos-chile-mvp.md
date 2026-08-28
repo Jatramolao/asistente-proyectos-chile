@@ -690,8 +690,8 @@ Use these official records and labels:
 1. **Sercotec / Capital Semilla Emprende / RM 2026:** status `closed`; $3.500.000 subsidy; $200.000–$500.000 management; $3.000.000–$3.300.000 investment; 3% beneficiary contribution; taxes paid by beneficiary; person aged 18+, without first-category start, plus the published debt, alimony-registry and ownership conditions. Sources:
    - `https://www.sercotec.cl/convocatoria/capital-semilla-emprende-region-metropolitana-de-santiago-2026/`
    - `https://www.sercotec.cl/wp-content/uploads/2026/04/Bases-Semilla-EMPRENDE-2026-Metropolitana-VB%C2%B0.pdf`
-2. **Corfo / Semilla Inicia Mujeres / convocatoria nacional 2025:** status `closed` and `isReference: true`; territory `Todo Chile`; opened 10 March 2025 and closed 9 April 2025; person natural de género femenino, 18+ and resident in Chile, or eligible company led by women; idea or developed solution without sales; up to $17.000.000 covering up to 85%, with 15% beneficiary contribution. Keep `Semilla Inicia` as the parent instrument and preserve the gender-specific call name. Sources:
-   - `https://www.corfo.cl/sites/cpp/movil/semilla-inicia-mujer`
+2. **Corfo / Semilla Inicia Mujeres / convocatoria nacional 2026:** status `closed` and `isReference: true`; territory `Todo Chile`; opened 12 May 2026 and closed 15 June 2026; person natural de género femenino, 18+ and resident in Chile, or eligible company led by women; idea or developed solution without sales; up to $17.000.000 covering up to 85%, with 15% beneficiary contribution. Keep `Semilla Inicia` as the parent instrument and preserve the gender-specific call name. Sources:
+   - `https://www.corfo.gob.cl/sites/cpp/programa/semilla-inicia-mujer/`
    - `https://corfo.cl/sites/cpp/wp-content/uploads/2025/05/preguntasfrecuentessemillainicia2022-1.pdf`
 3. **FOSIS / Emprendamos Semilla 2026:** status `closed`; idea or early-stage business; application closed 30 April 2026; availability and extra requirements depend on commune; personal conditions must remain `unknown` unless the national official page states them for Semilla. Sources:
    - `https://www.fosis.gob.cl/es/postulaciones/`

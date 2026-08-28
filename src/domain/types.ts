@@ -40,11 +40,16 @@ export type AntecedentKey =
   | "impact.indicators"
   | "impact.risks"
   | "applicant.age"
+  | "applicant.gender"
   | "applicant.region"
+  | "applicant.commune"
   | "applicant.formalization"
   | "applicant.sii_first_category"
+  | "applicant.sii_activity_age_months"
   | "applicant.has_sales"
   | "applicant.rsh_percent"
+  | "applicant.valid_id"
+  | "applicant.clave_unica"
   | "applicant.company_ownership_percent"
   | "applicant.labor_tax_debt"
   | "applicant.alimony_registry";
@@ -154,6 +159,7 @@ export type FundingCall = {
   timezone: "America/Santiago";
   opensAt: string;
   closesAt: string;
+  schedulePrecision: "date" | "datetime";
   status: CallStatus;
   isReference: boolean;
   supportType: SupportType;

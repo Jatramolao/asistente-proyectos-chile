@@ -21,4 +21,12 @@ describe("antecedent definitions", () => {
       decisive: true,
     });
   });
+
+  it("includes the applicant facts required by the pilot calls", () => {
+    expect(getAntecedentDefinition("applicant.gender").decisive).toBe(true);
+    expect(getAntecedentDefinition("applicant.sii_activity_age_months").valueType).toBe("number");
+    expect(getAntecedentDefinition("applicant.commune").valueType).toBe("short_text");
+    expect(getAntecedentDefinition("applicant.valid_id").valueType).toBe("boolean");
+    expect(getAntecedentDefinition("applicant.clave_unica").valueType).toBe("boolean");
+  });
 });
