@@ -15,6 +15,14 @@ export type ChecklistGroup = {
   items: ChecklistItem[];
 };
 
+export type CallChecklistGroup = {
+  callId: string;
+  callName: string;
+  institutionId: string;
+  territory: string;
+  groups: ChecklistGroup[];
+};
+
 const STAGE_LABELS: Record<RequirementStage, string> = {
   application: "Para postular",
   evaluation: "Durante la evaluación",
@@ -104,4 +112,24 @@ export function buildChecklist(input: {
       items: [...items.values()].filter((item) => item.stage === stage),
     }))
     .filter((group) => group.items.length > 0);
+}
+
+export function buildChecklistByCall(input: {
+  calls: readonly FundingCall[];
+  progress: readonly ChecklistProgress[];
+}): CallChecklistGroup[] {
+  const transversal = buildChecklist(input);
+
+  return input.calls.map((call) => ({
+    callId: call.id,
+    callName: call.name,
+    institutionId: call.institutionId,
+    territory: call.territory,
+    groups: transversal
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => item.callIds.includes(call.id)),
+      }))
+      .filter((group) => group.items.length > 0),
+  }));
 }

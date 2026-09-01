@@ -50,13 +50,13 @@ export function AntecedentField({ action, antecedent, definition }: AntecedentFi
           name="value"
         />
         <div className="mt-3 flex flex-wrap gap-2">
-          <button className="rounded-lg bg-[var(--navy)] px-3.5 py-2 text-xs font-semibold text-white transition-transform duration-150 active:scale-[0.97]" name="intent" type="submit" value="confirm">
+          <button className="rounded-lg bg-[var(--navy)] px-3.5 py-2 text-xs font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#1c426b] active:scale-[0.97]" name="intent" type="submit" value="confirm">
             Confirmar
           </button>
-          <button className="rounded-lg border border-[var(--line-strong)] bg-white px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition-transform duration-150 active:scale-[0.97]" name="intent" type="submit" value="correct">
+          <button className="rounded-lg border border-[var(--line-strong)] bg-white px-3.5 py-2 text-xs font-semibold text-[var(--navy)] transition-[background-color,transform] duration-150 hover:bg-[var(--blue-soft)] active:scale-[0.97]" name="intent" type="submit" value="correct">
             Guardar corrección
           </button>
-          <button className="rounded-lg px-3.5 py-2 text-xs font-semibold text-[var(--ink-muted)] underline underline-offset-4" name="intent" type="submit" value="missing">
+          <button className="rounded-lg px-3.5 py-2 text-xs font-semibold text-[var(--ink-muted)] underline underline-offset-4 transition-colors hover:text-[var(--navy)]" name="intent" type="submit" value="missing">
             Dejar pendiente
           </button>
         </div>

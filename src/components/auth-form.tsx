@@ -54,7 +54,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
       <div>
         <label className="mb-2 block text-sm font-semibold text-[var(--navy)]" htmlFor="email">Correo electrónico</label>
-        <input className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-4 py-3 text-[var(--ink)] shadow-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-soft)]" id="email" name="email" type="email" autoComplete="email" required />
+        <input className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-4 py-3 text-[var(--ink)] shadow-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-soft)]" id="email" name="email" type="email" autoComplete="email" spellCheck={false} required />
       </div>
 
       <div>

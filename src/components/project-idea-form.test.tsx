@@ -12,5 +12,6 @@ describe("ProjectIdeaForm", () => {
     expect(screen.getByText("51 / 5.000 caracteres")).toBeInTheDocument();
     expect(screen.getByText(/no evaluamos ni validamos documentos/i)).toBeInTheDocument();
     expect(narrative).toHaveAttribute("minLength", "40");
+    expect(narrative).not.toHaveFocus();
   });
 });

@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28.pilot.1",
-  "reviewedAt": "2026-08-28",
+  "version": "2026-09-01.pilot.2",
+  "reviewedAt": "2026-09-01",
   "coverageNotice": "Catálogo piloto con tres instrumentos públicos. No representa toda la oferta nacional y las convocatorias mostradas están cerradas a la fecha de revisión.",
   "institutions": [
     {
@@ -47,7 +47,7 @@
       "officialUrl": "https://www.sercotec.cl/convocatoria/capital-semilla-emprende-region-metropolitana-de-santiago-2026/",
       "sourceType": "official_page",
       "scope": "Región Metropolitana de Santiago, convocatoria 2026",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "current"
     },
     {
@@ -57,7 +57,7 @@
       "officialUrl": "https://www.sercotec.cl/wp-content/uploads/2026/04/Bases-Semilla-EMPRENDE-2026-Metropolitana-VB%C2%B0.pdf",
       "sourceType": "bases",
       "scope": "Región Metropolitana de Santiago, convocatoria 2026",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "closed"
     },
     {
@@ -67,27 +67,17 @@
       "officialUrl": "https://www.sercotec.cl/wp-content/uploads/2026/05/Ampliacion-postulacion-Semilla-Emprende-2026-Metropolitana.pdf",
       "sourceType": "official_notice",
       "scope": "Región Metropolitana de Santiago, plazo final 2026",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "closed"
     },
     {
       "id": "corfo-inicia-mujeres-2026-page",
       "institutionId": "corfo",
       "title": "Semilla Inicia para empresas lideradas por mujeres",
-      "officialUrl": "https://www.corfo.gob.cl/sites/cpp/programa/semilla-inicia-mujer/",
+      "officialUrl": "https://www.corfo.gob.cl/sites/cpp/convocatoria/semilla-inicia-empresas-lideradas-por-mujeres-2026/",
       "sourceType": "official_page",
       "scope": "Todo Chile, convocatoria 2026",
-      "reviewedAt": "2026-08-28",
-      "status": "current"
-    },
-    {
-      "id": "corfo-inicia-faq",
-      "institutionId": "corfo",
-      "title": "Preguntas frecuentes Semilla Inicia",
-      "officialUrl": "https://corfo.cl/sites/cpp/wp-content/uploads/2025/05/preguntasfrecuentessemillainicia2022-1.pdf",
-      "sourceType": "faq",
-      "scope": "Reglas generales del instrumento Semilla Inicia",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "current"
     },
     {
@@ -97,7 +87,7 @@
       "officialUrl": "https://www.fosis.gob.cl/es/postulaciones/",
       "sourceType": "official_page",
       "scope": "Oferta nacional y disponibilidad territorial 2026",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "current"
     },
     {
@@ -107,7 +97,7 @@
       "officialUrl": "https://www.fosis.gob.cl/es/noticias/FOSIS-abre-28-mil-cupos-para-emprender-con-una-inversi%C3%B3n-de-$29-mil-millones-ID=650818/",
       "sourceType": "official_notice",
       "scope": "Proceso 2026, referencia nacional con información territorial de Ñuble",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "closed"
     },
     {
@@ -117,7 +107,7 @@
       "officialUrl": "https://www.fosis.gob.cl/es/noticias/FOSIS-extiende-postulaciones-al-programa-%E2%80%9CEmprendamos%E2%80%9D-hasta-el-8-de-mayo-ID%3D260657/",
       "sourceType": "official_notice",
       "scope": "Todo Chile, cierre de la línea Emprendamos Semilla 2026",
-      "reviewedAt": "2026-08-28",
+      "reviewedAt": "2026-09-01",
       "status": "closed"
     }
   ],
@@ -320,7 +310,7 @@
           "responsibleParty": "applicant",
           "verifier": "Corfo durante la evaluación",
           "validity": null,
-          "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+          "sourceIds": ["corfo-inicia-mujeres-2026-page"]
         },
         {
           "id": "without-sales",
@@ -332,7 +322,7 @@
           "responsibleParty": "institution",
           "verifier": "Corfo",
           "validity": "Según el periodo definido en las bases de la convocatoria",
-          "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+          "sourceIds": ["corfo-inicia-mujeres-2026-page"]
         },
         {
           "id": "company-age",
@@ -356,7 +346,7 @@
           "responsibleParty": "applicant",
           "verifier": "Corfo durante la evaluación",
           "validity": "Solo para la convocatoria 2026",
-          "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+          "sourceIds": ["corfo-inicia-mujeres-2026-page"]
         }
       ],
       "rules": [
@@ -394,7 +384,7 @@
           "passReason": "El proyecto se declaró sin ventas.",
           "contradictionReason": "La convocatoria está dirigida a soluciones sin ventas.",
           "unknownReason": "Falta confirmar si existen ventas.",
-          "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+          "sourceIds": ["corfo-inicia-mujeres-2026-page"]
         },
         {
           "id": "corfo-novelty-known",
@@ -406,10 +396,10 @@
           "passReason": "El proyecto cuenta con un antecedente de novedad para revisar.",
           "contradictionReason": "La propuesta no presenta una novedad declarada.",
           "unknownReason": "Falta explicar la novedad frente a alternativas existentes.",
-          "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+          "sourceIds": ["corfo-inicia-mujeres-2026-page"]
         }
       ],
-      "sourceIds": ["corfo-inicia-mujeres-2026-page", "corfo-inicia-faq"]
+      "sourceIds": ["corfo-inicia-mujeres-2026-page"]
     },
     {
       "id": "fosis-emprendamos-semilla-2026",

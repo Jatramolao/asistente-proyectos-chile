@@ -12,6 +12,7 @@ describe("AuthForm", () => {
 
     expect(screen.getByLabelText("Nombre")).toBeInTheDocument();
     expect(screen.getByLabelText("Correo electrónico")).toBeInTheDocument();
+    expect(screen.getByLabelText("Correo electrónico")).toHaveAttribute("spellcheck", "false");
     expect(screen.getByLabelText("Contraseña")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Crear cuenta" })).toBeInTheDocument();
   });

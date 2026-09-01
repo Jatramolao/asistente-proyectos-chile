@@ -42,7 +42,16 @@ describe("pilot catalog", () => {
   });
 
   it("loads the validated editorial version", () => {
-    expect(loadPilotCatalog().version).toBe("2026-08-28.pilot.1");
+    expect(loadPilotCatalog().version).toBe("2026-09-01.pilot.2");
+  });
+
+  it("uses recently checked, call-specific official pages", () => {
+    expect(catalog.reviewedAt).toBe("2026-09-01");
+    expect(catalog.sources.every((source) => source.reviewedAt === "2026-09-01")).toBe(true);
+    expect(
+      catalog.sources.find((source) => source.id === "corfo-inicia-mujeres-2026-page")?.officialUrl,
+    ).toContain("/convocatoria/semilla-inicia-empresas-lideradas-por-mujeres-2026/");
+    expect(catalog.sources.some((source) => source.id === "corfo-inicia-faq")).toBe(false);
   });
 
   it("publishes the same catalog version idempotently", () => {

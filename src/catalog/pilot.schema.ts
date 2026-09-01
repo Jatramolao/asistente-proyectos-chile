@@ -61,7 +61,7 @@ const SourceSchema = z
       .refine((url) => /(?:sercotec\.cl|corfo\.(?:cl|gob\.cl)|fosis\.gob\.cl)/.test(url), "Debe ser un dominio oficial"),
     sourceType: z.enum(["official_page", "bases", "faq", "official_notice"]),
     scope: z.string().min(1),
-    reviewedAt: z.literal("2026-08-28"),
+    reviewedAt: z.literal("2026-09-01"),
     status: z.enum(["current", "closed", "replaced", "verify"]),
   })
   .strict();
@@ -146,8 +146,8 @@ const CallSchema = z
 
 export const PilotCatalogSchema = z
   .object({
-    version: z.literal("2026-08-28.pilot.1"),
-    reviewedAt: z.literal("2026-08-28"),
+    version: z.literal("2026-09-01.pilot.2"),
+    reviewedAt: z.literal("2026-09-01"),
     coverageNotice: z.string().min(1),
     institutions: z
       .array(

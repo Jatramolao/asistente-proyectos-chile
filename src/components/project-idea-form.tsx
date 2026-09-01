@@ -34,7 +34,7 @@ export function ProjectIdeaForm({ action }: ProjectIdeaFormProps) {
       </p>
       <textarea
         aria-describedby="narrative-help narrative-count"
-        autoFocus
+        autoComplete="off"
         className="mt-5 min-h-72 w-full resize-y rounded-xl border border-[var(--line-strong)] bg-white px-5 py-4 text-base leading-7 text-[var(--ink)] shadow-sm outline-none transition-[border-color,box-shadow] duration-150 focus:border-[var(--blue)] focus:shadow-[0_0_0_3px_var(--blue-soft)]"
         id="narrative"
         maxLength={5000}

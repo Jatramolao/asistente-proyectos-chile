@@ -28,6 +28,7 @@ html {
   background: var(--canvas);
   color: var(--ink);
   font-family: "Manrope Variable", system-ui, sans-serif;
+  scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
 }
 
@@ -51,6 +52,16 @@ input,
 textarea,
 select {
   font: inherit;
+}
+
+a,
+button,
+summary {
+  touch-action: manipulation;
+}
+
+section[id] {
+  scroll-margin-top: 2rem;
 }
 
 a:focus-visible,

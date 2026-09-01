@@ -4,10 +4,12 @@ import { ArrowUpRight, CircleAlert, FileCheck2 } from "lucide-react";
 import { confirmAntecedentAction } from "@/app/actions/projects";
 import { updateChecklistItemAction } from "@/app/actions/checklist";
 import { ANTECEDENT_DEFINITIONS, getAntecedentDefinition } from "@/domain/antecedents";
-import { buildChecklist } from "@/domain/checklist";
+import { buildChecklist, buildChecklistByCall } from "@/domain/checklist";
+import { assessCatalogFreshness } from "@/domain/freshness";
 import { matchCall } from "@/domain/match";
 import type { FundingCall, MatchStatus, ProjectAntecedent } from "@/domain/types";
 import { AntecedentField } from "@/components/antecedent-field";
+import { ChecklistView } from "@/components/checklist-view";
 import { getDb } from "@/server/db/client";
 import { projectRepository } from "@/server/db/repositories";
 import { requireSession } from "@/server/session";
@@ -53,8 +55,16 @@ function missingAntecedent(projectId: string, key: (typeof PRIORITY_KEYS)[number
   };
 }
 
-export default async function ProjectPage({ params }: { params: Promise<{ projectId: string }> }) {
+export default async function ProjectPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ projectId: string }>;
+  searchParams: Promise<{ checklist?: string | string[] }>;
+}) {
   const { projectId } = await params;
+  const query = await searchParams;
+  const activeChecklistView = query.checklist === "transversal" ? "transversal" : "calls";
   const { userId } = await requireSession();
   const projects = projectRepository(getDb());
   const project = projects.getById(userId, projectId);
@@ -70,11 +80,17 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
     call,
     match: matchCall(call as FundingCall, antecedents, new Date(), catalog.version),
   }));
-  const checklist = buildChecklist({
+  const checklistInput = {
     calls: catalog.calls as FundingCall[],
     progress: projects.getChecklistProgress(userId, projectId),
+  };
+  const checklist = buildChecklist(checklistInput);
+  const checklistByCall = buildChecklistByCall(checklistInput);
+  const freshness = assessCatalogFreshness({
+    reviewedAt: catalog.reviewedAt,
+    callStatuses: catalog.calls.map((call) => call.status),
+    now: new Date(),
   });
-  const callsById = new Map(catalog.calls.map((call) => [call.id, call.name]));
   const completed = antecedents.filter((item) => ["confirmed", "corrected"].includes(item.confirmationStatus)).length;
 
   return (
@@ -122,37 +138,49 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
       </section>
 
       <section className="border-t border-[var(--line-strong)] py-10" id="oportunidades">
-        <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--blue)]">Catálogo oficial piloto</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--navy)]">Fondos y beneficios relacionados</h2>
-          <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">Estas convocatorias 2026 están cerradas y sirven como referencia. Las condiciones pueden cambiar en una nueva apertura o según el territorio.</p>
+        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
+          <div className="max-w-3xl">
+            <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--blue)]">Catálogo oficial piloto</p>
+            <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--navy)] text-balance">Fondos y beneficios relacionados</h2>
+            <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)] text-pretty">Estas convocatorias 2026 están cerradas y sirven como referencia. Las condiciones pueden cambiar en una nueva apertura o según el territorio.</p>
+          </div>
+          <aside className="border-l-2 border-[var(--green)] pl-4 text-xs leading-5 text-[var(--ink-muted)]">
+            <p className="font-semibold text-[var(--navy)]">
+              {freshness.status === "recently_reviewed" ? "Fuentes revisadas recientemente" : "Revisión de fuentes pendiente"}
+            </p>
+            <p className="mt-1">Última revisión: {formatDate(catalog.reviewedAt)}.</p>
+            <p>Próxima revisión: {formatDate(freshness.nextReviewAt)}.</p>
+          </aside>
         </div>
 
-        <div className="mt-7 grid gap-5 xl:grid-cols-3">
-          {results.map(({ call, match }) => {
+        <div className="mt-8 border-y border-[var(--line-strong)]">
+          {results.map(({ call, match }, index) => {
             const primarySource = sources.get(call.sourceIds[0]);
             return (
-              <article className="flex flex-col rounded-xl border border-[var(--line)] bg-[var(--surface)] p-5 shadow-[0_12px_35px_rgba(20,48,79,0.06)]" key={call.id}>
-                <div className="flex items-start justify-between gap-3">
-                  <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[var(--blue)]">{call.institutionId}</p>
-                  <span className="rounded-full border border-[#ddc9a5] bg-[#fff7e8] px-2.5 py-1 text-[0.7rem] font-semibold text-[#76551e]">{MATCH_LABELS[match.status]}</span>
+              <article className="grid gap-5 border-t border-[var(--line)] py-6 first:border-t-0 lg:grid-cols-[13rem_minmax(0,1fr)_16rem]" key={call.id}>
+                <div>
+                  <p className="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-[var(--blue)]">{String(index + 1).padStart(2, "0")} · {call.institutionId}</p>
+                  <span className="mt-3 inline-flex border-l-2 border-[#b98a3d] pl-2 text-[0.7rem] font-semibold text-[#76551e]">{MATCH_LABELS[match.status]}</span>
                 </div>
-                <h3 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[var(--navy)]">{call.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">{call.benefit.summary}</p>
-                <dl className="mt-5 grid grid-cols-2 gap-3 border-y border-[var(--line)] py-4 text-sm">
-                  <div><dt className="text-xs text-[var(--ink-muted)]">Beneficio máximo</dt><dd className="mt-1 font-semibold text-[var(--navy)]">{formatClp(call.benefit.maximumAmountClp)}</dd></div>
-                  <div><dt className="text-xs text-[var(--ink-muted)]">Aporte beneficiario</dt><dd className="mt-1 font-semibold text-[var(--navy)]">{call.benefit.beneficiaryContributionPercent === null ? "Variable" : `${call.benefit.beneficiaryContributionPercent}%`}</dd></div>
-                </dl>
-                <div className="mt-4 flex items-start gap-2 text-xs leading-5 text-[var(--ink-muted)]">
-                  <CircleAlert aria-hidden className="mt-0.5 shrink-0" size={15} />
-                  <p>{match.reasons[0]} Cierre: {formatDate(call.closesAt)}.</p>
+                <div className="min-w-0">
+                  <h3 className="text-xl font-semibold tracking-[-0.03em] text-[var(--navy)] text-balance">{call.name}</h3>
+                  <p className="mt-3 max-w-2xl text-sm leading-6 text-[var(--ink-muted)] text-pretty">{call.benefit.summary}</p>
+                  <div className="mt-4 flex items-start gap-2 text-xs leading-5 text-[var(--ink-muted)]">
+                    <CircleAlert aria-hidden className="mt-0.5 shrink-0" size={15} />
+                    <p>{match.reasons[0]} Cierre: {formatDate(call.closesAt)}.</p>
+                  </div>
                 </div>
-                <div className="mt-auto pt-5">
+                <div className="lg:border-l lg:border-[var(--line)] lg:pl-5">
+                  <dl className="grid grid-cols-2 gap-3 text-sm lg:grid-cols-1">
+                    <div><dt className="text-xs text-[var(--ink-muted)]">Beneficio máximo</dt><dd className="mt-1 font-mono font-semibold tabular-nums text-[var(--navy)]">{formatClp(call.benefit.maximumAmountClp)}</dd></div>
+                    <div><dt className="text-xs text-[var(--ink-muted)]">Aporte beneficiario</dt><dd className="mt-1 font-mono font-semibold tabular-nums text-[var(--navy)]">{call.benefit.beneficiaryContributionPercent === null ? "Variable" : `${call.benefit.beneficiaryContributionPercent}%`}</dd></div>
+                  </dl>
                   {primarySource ? (
-                    <a className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-2 underline-offset-4" href={primarySource.officialUrl} rel="noreferrer" target="_blank">
+                    <a className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-2 underline-offset-4 hover:decoration-[var(--blue)]" href={primarySource.officialUrl} rel="noreferrer" target="_blank">
                       Revisar fuente oficial <ArrowUpRight aria-hidden size={15} />
                     </a>
                   ) : null}
+                  <p className="mt-2 text-[0.68rem] leading-4 text-[var(--ink-muted)]">Fuente revisada el {primarySource ? formatDate(primarySource.reviewedAt) : "—"}.</p>
                 </div>
               </article>
             );
@@ -163,52 +191,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
       <section className="border-t border-[var(--line-strong)] py-10" id="checklist">
         <div className="max-w-3xl">
           <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--blue)]">Requisitos centralizados</p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--navy)]">Checklist transversal</h2>
-          <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)]">Los antecedentes canónicos se muestran una sola vez e indican en qué convocatorias se reutilizan. Los formularios o formatos propios permanecen separados.</p>
+          <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--navy)] text-balance">Checklist de preparación</h2>
+          <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)] text-pretty">Revisa primero lo que pide cada convocatoria o cambia a la vista transversal para reconocer antecedentes reutilizables. El estado guardado es único en ambas vistas.</p>
         </div>
-
-        <div className="mt-8 space-y-8">
-          {checklist.map((group) => (
-            <section key={group.stage}>
-              <div className="flex items-center gap-3">
-                <h3 className="text-lg font-semibold text-[var(--navy)]">{group.label}</h3>
-                <span className="font-mono text-xs text-[var(--ink-muted)]">{group.items.length} elementos</span>
-              </div>
-              <div className="mt-3 divide-y divide-[var(--line)] rounded-xl border border-[var(--line)] bg-[var(--surface)]">
-                {group.items.map((item) => (
-                  <article className="grid gap-5 p-5 lg:grid-cols-[1fr_20rem]" key={item.key}>
-                    <div>
-                      <div className="flex flex-wrap items-start justify-between gap-3">
-                        <h4 className="font-semibold text-[var(--navy)]">{item.label}</h4>
-                        <span className="rounded-full border border-[var(--line-strong)] bg-white px-2.5 py-1 text-[0.7rem] font-semibold text-[var(--ink-muted)]">{item.statusLabel}</span>
-                      </div>
-                      <p className="mt-2 text-xs leading-5 text-[var(--ink-muted)]">Responsable: {item.responsibleParty === "applicant" ? "persona postulante" : item.responsibleParty === "institution" ? "institución" : "beneficiario seleccionado"}. Verifica: {item.verifier}.</p>
-                      <p className="mt-3 text-xs leading-5 text-[var(--blue)]">Sirve para: {item.callIds.map((callId) => callsById.get(callId)).filter(Boolean).join(" · ")}</p>
-                    </div>
-                    <form action={updateChecklistItemAction} className="space-y-2">
-                      <input name="projectId" type="hidden" value={projectId} />
-                      <input name="itemKey" type="hidden" value={item.key} />
-                      <label className="sr-only" htmlFor={`status-${item.key}`}>Estado de {item.label}</label>
-                      <select className="w-full rounded-lg border border-[var(--line-strong)] bg-white px-3 py-2 text-xs" defaultValue={item.status} id={`status-${item.key}`} name="status">
-                        <option value="pending">Pendiente</option>
-                        <option value="in_progress">En preparación</option>
-                        <option value="user_completed_unvalidated">Completado por mí, no validado</option>
-                        <option value="not_applicable">No aplica</option>
-                        <option value="institution_verifies">Verifica la institución</option>
-                        <option value="future_if_selected">Futuro, si soy seleccionado</option>
-                      </select>
-                      <label className="sr-only" htmlFor={`note-${item.key}`}>Nota</label>
-                      <input className="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-xs" defaultValue={item.note ?? ""} id={`note-${item.key}`} name="note" placeholder="Nota opcional" />
-                      <label className="sr-only" htmlFor={`reason-${item.key}`}>Motivo si no aplica</label>
-                      <input className="w-full rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-xs" defaultValue={item.reason ?? ""} id={`reason-${item.key}`} name="reason" placeholder="Motivo obligatorio si no aplica" />
-                      <button className="rounded-lg bg-[var(--navy)] px-3 py-2 text-xs font-semibold text-white active:scale-[0.98]" type="submit">Guardar estado</button>
-                    </form>
-                  </article>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
+        <ChecklistView action={updateChecklistItemAction} activeView={activeChecklistView} byCall={checklistByCall} calls={catalog.calls as FundingCall[]} projectId={projectId} transversal={checklist} />
       </section>
 
       <section className="border-t border-[var(--line-strong)] py-10" id="fuentes">
@@ -216,7 +202,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
           <FileCheck2 aria-hidden className="mt-0.5 shrink-0 text-[var(--green)]" size={20} />
           <div>
             <h2 className="font-semibold text-[var(--navy)]">Trazabilidad del catálogo</h2>
-            <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Versión {catalog.version}, revisada el 28 de agosto de 2026. Cada condición debe confirmarse nuevamente en la institución antes de postular.</p>
+            <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Versión {catalog.version}, revisada el {formatDate(catalog.reviewedAt)}. Cada condición debe confirmarse nuevamente en la institución antes de postular.</p>
             <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2">
               {catalog.institutions.map((institution) => (
                 <li key={institution.id}><a className="text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href={institution.officialUrl} rel="noreferrer" target="_blank">{institution.name}</a></li>

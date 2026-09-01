@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import catalog from "@/catalog/pilot.json";
 import type { FundingCall } from "./types";
-import { buildChecklist } from "./checklist";
+import { buildChecklist, buildChecklistByCall } from "./checklist";
 
 describe("buildChecklist", () => {
   it("reuses canonical antecedents and preserves call-specific formats", () => {
@@ -29,5 +29,29 @@ describe("buildChecklist", () => {
 
     expect(item?.status).toBe("user_completed_unvalidated");
     expect(item?.statusLabel).toBe("Completado por el usuario, no validado");
+  });
+
+  it("groups by call while keeping shared items on the same stable key", () => {
+    const progress = [{
+      itemKey: "antecedent:applicant.age",
+      status: "in_progress" as const,
+      note: "Confirmar antes de postular",
+      reason: null,
+      updatedAt: "2026-09-01T12:00:00Z",
+    }];
+
+    const byCall = buildChecklistByCall({ calls: catalog.calls as FundingCall[], progress });
+    const sercotecAge = byCall[0].groups.flatMap((group) => group.items)
+      .find((item) => item.key === "antecedent:applicant.age");
+    const fosisAge = byCall[2].groups.flatMap((group) => group.items)
+      .find((item) => item.key === "antecedent:applicant.age");
+
+    expect(byCall.map((group) => group.callId)).toEqual([
+      "sercotec-capital-semilla-rm-2026",
+      "corfo-semilla-inicia-mujeres-2026",
+      "fosis-emprendamos-semilla-2026",
+    ]);
+    expect(sercotecAge).toMatchObject({ key: "antecedent:applicant.age", status: "in_progress" });
+    expect(fosisAge).toMatchObject({ key: "antecedent:applicant.age", status: "in_progress" });
   });
 });

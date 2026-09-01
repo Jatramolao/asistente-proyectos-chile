@@ -13,7 +13,8 @@ La aplicación parte desde un relato libre, propone antecedentes que la persona 
 - Motor determinista de correspondencia sin puntajes opacos.
 - Catálogo piloto versionado con convocatorias 2026 de Sercotec, Corfo y FOSIS.
 - Beneficios, aportes, territorio, fechas y enlaces oficiales por instrumento.
-- Checklist transversal que reutiliza antecedentes comunes y conserva formatos específicos por convocatoria.
+- Checklist por convocatoria como vista principal y vista transversal para reconocer antecedentes reutilizables; ambas conservan el mismo progreso.
+- Señal visible de frescura del catálogo, con próxima revisión calculada según existan convocatorias vigentes.
 - Estados manuales: pendiente, en preparación, completado por el usuario sin validar y no aplica con motivo.
 
 ## Puesta en marcha
@@ -41,13 +42,15 @@ La suite E2E recorre registro, creación del proyecto, confirmación de antecede
 
 ## Cobertura piloto y límites
 
-El catálogo inicial no pretende cubrir todos los instrumentos nacionales. Incluye como referencias verificadas al 28 de agosto de 2026:
+El catálogo inicial no pretende cubrir todos los instrumentos nacionales. Incluye como referencias verificadas al 1 de septiembre de 2026:
 
 - Capital Semilla Emprende Región Metropolitana de Santiago 2026, Sercotec.
 - Semilla Inicia para empresas lideradas por mujeres 2026, Corfo.
 - Emprendamos Semilla 2026, FOSIS.
 
 Estas convocatorias están cerradas y se muestran con valor referencial. Una nueva apertura puede cambiar montos, requisitos, formatos, territorio y plazos. Antes de postular, siempre prevalecen las bases y el portal oficial de la institución.
+
+La política piloto exige una nueva revisión editorial cada 7 días mientras exista una convocatoria abierta o programada, y cada 30 días cuando todo el catálogo esté cerrado. Esta señal informa la frescura de la revisión; no reemplaza la consulta de las bases oficiales antes de postular.
 
 La plataforma:
 
