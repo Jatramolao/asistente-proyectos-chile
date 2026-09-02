@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import catalog from "@/catalog/pilot.json";
 import { buildChecklist, buildChecklistByCall } from "@/domain/checklist";
@@ -42,5 +42,44 @@ describe("ChecklistView", () => {
 
     expect(screen.getAllByRole("heading", { name: /^Edad$/ })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "Por convocatoria" })).toHaveAttribute("href", "?checklist=convocatorias#checklist");
+  });
+
+  it("refreshes every rendered copy when a shared status changes", () => {
+    const { rerender } = render(
+      <ChecklistView
+        action={vi.fn()}
+        activeView="calls"
+        byCall={byCall}
+        calls={calls}
+        projectId="project-1"
+        transversal={transversal}
+      />,
+    );
+    const ageSelects = screen.getAllByRole("combobox", { name: /Edad$/ });
+
+    fireEvent.change(ageSelects[0], { target: { value: "in_progress" } });
+    expect(ageSelects[1]).toHaveValue("pending");
+
+    const progress = [{
+      itemKey: "antecedent:applicant.age",
+      status: "in_progress" as const,
+      note: null,
+      reason: null,
+      updatedAt: "2026-09-01T12:00:00Z",
+    }];
+    rerender(
+      <ChecklistView
+        action={vi.fn()}
+        activeView="calls"
+        byCall={buildChecklistByCall({ calls, progress })}
+        calls={calls}
+        projectId="project-1"
+        transversal={buildChecklist({ calls, progress })}
+      />,
+    );
+
+    for (const select of screen.getAllByRole("combobox", { name: /Edad$/ })) {
+      expect(select).toHaveValue("in_progress");
+    }
   });
 });

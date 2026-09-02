@@ -70,6 +70,7 @@ function ChecklistItemRow({
               className="h-10 w-full rounded-md border border-[var(--line-strong)] bg-white px-3 text-xs text-[var(--ink)]"
               defaultValue={item.status}
               id={`status-${controlId}`}
+              key={`${controlId}-${item.status}`}
               name="status"
             >
               <option value="pending">Pendiente</option>
