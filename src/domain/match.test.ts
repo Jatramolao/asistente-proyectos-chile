@@ -65,6 +65,9 @@ function antecedent(value: number, confirmationStatus: ProjectAntecedent["confir
 }
 
 describe("matchCall", () => {
+  it.each([null, "", "  "])("keeps empty historic confirmations unknown: %s", (value) => {
+    expect(evaluateRule(rule(), [{ ...antecedent(30), value }]).outcome).toBe("unknown");
+  });
   it.each([
     ["closed call", call({ status: "closed" }), [antecedent(30)], "call_not_current"],
     ["confirmed contradiction", call(), [antecedent(16)], "not_compatible_now"],

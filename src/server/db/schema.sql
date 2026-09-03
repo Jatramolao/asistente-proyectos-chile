@@ -115,3 +115,10 @@ CREATE TABLE IF NOT EXISTS app_event (
   properties_json TEXT NOT NULL,
   created_at TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS app_project_call (
+  project_id TEXT NOT NULL REFERENCES app_project(id) ON DELETE CASCADE,
+  call_id TEXT NOT NULL,
+  selected_at TEXT NOT NULL,
+  PRIMARY KEY (project_id, call_id)
+);

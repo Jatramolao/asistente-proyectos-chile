@@ -23,7 +23,7 @@ export type CallChecklistGroup = {
   groups: ChecklistGroup[];
 };
 
-const STAGE_LABELS: Record<RequirementStage, string> = {
+export const STAGE_LABELS: Record<RequirementStage, string> = {
   application: "Para postular",
   evaluation: "Durante la evaluación",
   selection: "Si el proyecto es seleccionado",
@@ -63,11 +63,29 @@ export function buildChecklist(input: {
         : [`requirement:${call.id}:${requirement.id}`];
 
       for (const itemKey of itemKeys) {
+        const context = {
+          callId: call.id,
+          requirementId: requirement.id,
+          stage: requirement.stage,
+          responsibleParty: requirement.responsibleParty,
+          verifier: requirement.verifier,
+          validity: requirement.validity,
+          sourceIds: [...requirement.sourceIds],
+        };
         const existing = items.get(itemKey);
         if (existing) {
           existing.callIds = unique([...existing.callIds, call.id]);
           existing.sourceIds = unique([...existing.sourceIds, ...requirement.sourceIds]);
           existing.antecedentKeys = unique([...existing.antecedentKeys, ...requirement.antecedentKeys]);
+          existing.contexts.push(context);
+          const stages = Object.keys(STAGE_LABELS) as RequirementStage[];
+          existing.stage = stages[Math.min(stages.indexOf(existing.stage), stages.indexOf(requirement.stage))];
+          existing.verifier = unique(existing.contexts.map((item) => item.verifier)).join(" · ");
+          existing.validity = unique(existing.contexts.map((item) => item.validity).filter((value) => value !== null)).join(" · ") || null;
+          if (existing.contexts.some((item) => item.responsibleParty !== existing.responsibleParty)) {
+            existing.status = "pending";
+            existing.statusLabel = "Revisar por convocatoria";
+          }
           continue;
         }
 
@@ -90,6 +108,7 @@ export function buildChecklist(input: {
           sourceIds: requirement.sourceIds,
           note: null,
           reason: null,
+          contexts: [context],
         });
       }
     }
@@ -119,17 +138,17 @@ export function buildChecklistByCall(input: {
   progress: readonly ChecklistProgress[];
 }): CallChecklistGroup[] {
   const transversal = buildChecklist(input);
+  const sharedCallIds = new Map(transversal.flatMap((group) => group.items).map((item) => [item.key, item.callIds]));
 
   return input.calls.map((call) => ({
     callId: call.id,
     callName: call.name,
     institutionId: call.institutionId,
     territory: call.territory,
-    groups: transversal
+    groups: buildChecklist({ calls: [call], progress: input.progress })
       .map((group) => ({
         ...group,
-        items: group.items.filter((item) => item.callIds.includes(call.id)),
-      }))
-      .filter((group) => group.items.length > 0),
+        items: group.items.map((item) => ({ ...item, callIds: sharedCallIds.get(item.key) ?? [call.id] })),
+      })),
   }));
 }

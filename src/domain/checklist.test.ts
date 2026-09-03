@@ -4,6 +4,36 @@ import type { FundingCall } from "./types";
 import { buildChecklist, buildChecklistByCall } from "./checklist";
 
 describe("buildChecklist", () => {
+  it("keeps FOSIS verification and validity in its own call", () => {
+    const byCall = buildChecklistByCall({ calls: catalog.calls as FundingCall[], progress: [] });
+    const age = byCall[2].groups.flatMap((group) => group.items)
+      .find((item) => item.key === "antecedent:applicant.age");
+    expect(age?.verifier).toBe("FOSIS");
+    expect(age?.validity).toBe("A la fecha de postulación");
+  });
+
+  it("preserves different stages and responsibilities without duplicating shared progress", () => {
+    const first = structuredClone(catalog.calls[0]) as FundingCall;
+    const second = structuredClone(catalog.calls[2]) as FundingCall;
+    first.requirements = [first.requirements[0]];
+    second.requirements = [{ ...second.requirements[0], stage: "selection", responsibleParty: "institution" }];
+    const input = { calls: [first, second], progress: [{
+      itemKey: "antecedent:applicant.age", status: "in_progress" as const,
+      note: "Revisar mi edad", reason: null, updatedAt: "2026-09-02T12:00:00Z",
+    }] };
+    const byCall = buildChecklistByCall(input);
+    expect(byCall[1].groups[0].stage).toBe("selection");
+    expect(byCall[1].groups[0].items[0]).toMatchObject({
+      verifier: "FOSIS", responsibleParty: "institution", status: "in_progress", note: "Revisar mi edad",
+    });
+    const shared = buildChecklist(input).flatMap((group) => group.items);
+    expect(shared).toHaveLength(1);
+    expect(shared[0].contexts).toEqual(expect.arrayContaining([
+      expect.objectContaining({ callId: first.id, verifier: "Sercotec", stage: "application" }),
+      expect.objectContaining({ callId: second.id, verifier: "FOSIS", stage: "selection" }),
+    ]));
+  });
+
   it("reuses canonical antecedents and preserves call-specific formats", () => {
     const groups = buildChecklist({ calls: catalog.calls as FundingCall[], progress: [] });
     const items = groups.flatMap((group) => group.items);

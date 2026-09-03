@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { loadCatalog } from "@/server/services/catalog";
 
 const steps = [
   ["01", "Describe tu proyecto", "Parte con tus propias palabras. No necesitas conocer fondos ni formularios."],
@@ -7,6 +8,7 @@ const steps = [
 ] as const;
 
 export default function HomePage() {
+  const catalog = loadCatalog();
   return (
     <main id="contenido">
       <header className="mx-auto flex max-w-7xl items-center justify-between px-5 py-6 md:px-10">
@@ -39,9 +41,9 @@ export default function HomePage() {
             <Link className="rounded-lg bg-[var(--navy)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(20,48,79,0.18)] transition-[background-color,transform] duration-150 hover:bg-[#1c426b] active:scale-[0.97]" href="/registro">
               Crear mi proyecto
             </Link>
-            <a className="rounded-lg px-4 py-3 text-sm font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-4 underline-offset-4 hover:decoration-[var(--blue)]" href="#como-funciona">
-              Ver cómo funciona
-            </a>
+            <Link className="rounded-lg px-4 py-3 text-sm font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-4 underline-offset-4 hover:decoration-[var(--blue)]" href="/catalogo">
+              Explorar apoyos sin cuenta
+            </Link>
           </div>
         </div>
       </section>
@@ -70,8 +72,8 @@ export default function HomePage() {
 
       <section className="mx-auto grid max-w-7xl gap-6 px-5 py-12 md:grid-cols-[1fr_auto] md:items-center md:px-10">
         <div>
-          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--green)]">Catálogo piloto: 3 instrumentos</p>
-          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Capital Semilla Emprende, Semilla Inicia y Emprendamos Semilla, con vigencia y ámbito declarados.</p>
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--green)]">Catálogo para empezar: {catalog.calls.length} apoyos y referencias</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Financiamiento, asesoría y cursos de Sercotec, Corfo y FOSIS. Revisa fechas, condiciones y fuentes antes de elegir.</p>
         </div>
         <p className="max-w-lg rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-xs leading-5 text-[var(--ink-muted)]">
           Esta herramienta centraliza información oficial. No evalúa ni valida documentos y la institución convocante siempre prevalece.

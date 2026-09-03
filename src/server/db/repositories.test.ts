@@ -105,3 +105,23 @@ describe("catalogRepository", () => {
     db.close();
   });
 });
+
+describe("project opportunity selection", () => {
+  it("persists idempotently, isolates owners and preserves preparation when removed", () => {
+    const db = new Database(":memory:");
+    runMigrations(db);
+    const projects = projectRepository(db);
+    const project = projects.create({ userId: "a", name: "Idea", narrative: "Mi idea" });
+    expect(projects.selectCall("b", project.id, "call-1")).toBe(false);
+    expect(projects.selectCall("a", project.id, "call-1")).toBe(true);
+    projects.selectCall("a", project.id, "call-1");
+    expect(projects.listSelectedCalls("a", project.id)).toEqual(["call-1"]);
+    expect(projects.listSelectedCalls("b", project.id)).toEqual([]);
+    projects.setChecklistProgress("a", project.id, { itemKey: "shared", status: "in_progress" });
+    expect(projects.removeSelectedCall("b", project.id, "call-1")).toBe(false);
+    expect(projects.removeSelectedCall("a", project.id, "call-1")).toBe(true);
+    expect(projects.listSelectedCalls("a", project.id)).toEqual([]);
+    expect(projects.getChecklistProgress("a", project.id)).toHaveLength(1);
+    db.close();
+  });
+});

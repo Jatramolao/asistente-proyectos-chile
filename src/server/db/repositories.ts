@@ -161,6 +161,23 @@ export function projectRepository(db: Database.Database) {
   );
 
   return {
+    selectCall(userId: string, projectId: string, callId: string): boolean {
+      if (!ownsProject.get(projectId, userId)) return false;
+      db.prepare("INSERT OR IGNORE INTO app_project_call (project_id, call_id, selected_at) VALUES (?, ?, ?)").run(projectId, callId, new Date().toISOString());
+      return true;
+    },
+
+    listSelectedCalls(userId: string, projectId: string): string[] {
+      if (!ownsProject.get(projectId, userId)) return [];
+      return (db.prepare("SELECT call_id FROM app_project_call WHERE project_id = ? ORDER BY selected_at, call_id").all(projectId) as { call_id: string }[]).map(row => row.call_id);
+    },
+
+    removeSelectedCall(userId: string, projectId: string, callId: string): boolean {
+      if (!ownsProject.get(projectId, userId)) return false;
+      db.prepare("DELETE FROM app_project_call WHERE project_id = ? AND call_id = ?").run(projectId, callId);
+      return true;
+    },
+
     create(input: { userId: string; name: string; narrative: string }): ProjectRecord {
       const now = new Date().toISOString();
       const id = randomUUID();

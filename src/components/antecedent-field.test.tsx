@@ -4,6 +4,15 @@ import { getAntecedentDefinition } from "@/domain/antecedents";
 import { AntecedentField } from "./antecedent-field";
 
 describe("AntecedentField", () => {
+  it("offers explicit yes, no and unknown answers instead of technical boolean text", () => {
+    render(<AntecedentField action={() => undefined} antecedent={{
+      id: "sales", projectId: "project-1", key: "applicant.has_sales", value: false,
+      confirmationStatus: "confirmed", origin: "answer", sourceExcerpt: null, updatedAt: "2026-09-02",
+    }} definition={getAntecedentDefinition("applicant.has_sales")} />);
+    expect(screen.getByRole("combobox", { name: /Ventas formales/ })).toHaveValue("false");
+    expect(screen.getByRole("option", { name: "Aún no lo sé" })).toBeInTheDocument();
+    expect(screen.queryByText("false")).not.toBeInTheDocument();
+  });
   it("makes an inferred antecedent visibly unconfirmed", () => {
     render(
       <AntecedentField

@@ -7,10 +7,13 @@ import { authClient } from "@/server/auth-client";
 
 type AuthFormProps = {
   mode: "sign-in" | "sign-up";
+  opportunityId?: string;
 };
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, opportunityId }: AuthFormProps) {
   const router = useRouter();
+  const destination = opportunityId ? `/catalogo/${encodeURIComponent(opportunityId)}/preparar` : "/proyectos";
+  const query = opportunityId ? `?oportunidad=${encodeURIComponent(opportunityId)}` : "";
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const isSignUp = mode === "sign-up";
@@ -29,9 +32,9 @@ export function AuthForm({ mode }: AuthFormProps) {
           name: String(formData.get("name") ?? "").trim(),
           email,
           password,
-          callbackURL: "/proyectos",
+          callbackURL: destination,
         })
-      : await authClient.signIn.email({ email, password, callbackURL: "/proyectos" });
+      : await authClient.signIn.email({ email, password, callbackURL: destination });
 
     if (response.error) {
       setError(response.error.message ?? "No pudimos completar el acceso. Revisa los datos e inténtalo nuevamente.");
@@ -39,7 +42,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       return;
     }
 
-    router.push("/proyectos");
+    router.push(destination);
     router.refresh();
   }
 
@@ -71,7 +74,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
       <p className="text-center text-sm text-[var(--ink-muted)]">
         {isSignUp ? "¿Ya tienes una cuenta?" : "¿Aún no tienes una cuenta?"}{" "}
-        <Link className="font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-2 underline-offset-4" href={isSignUp ? "/ingresar" : "/registro"}>
+        <Link className="font-semibold text-[var(--blue)] underline decoration-[var(--blue-soft)] decoration-2 underline-offset-4" href={(isSignUp ? "/ingresar" : "/registro") + query}>
           {isSignUp ? "Ingresa" : "Regístrate"}
         </Link>
       </p>

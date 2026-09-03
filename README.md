@@ -9,12 +9,18 @@ La aplicación parte desde un relato libre, propone antecedentes que la persona 
 - Registro e inicio de sesión con correo y contraseña.
 - Creación de proyectos desde una descripción libre de 40 a 5.000 caracteres.
 - Extracción conservadora de antecedentes explícitos, siempre marcados como pendientes de confirmación.
+- Recorrido para principiantes con nueve respuestas iniciales en tres grupos, preguntas simples y próximos pasos.
+- Respuestas «Sí», «No» y «Aún no lo sé»; los campos vacíos se guardan como pendientes.
 - Ficha transversal con estados confirmado, corregido y pendiente.
 - Motor determinista de correspondencia sin puntajes opacos.
-- Catálogo piloto versionado con convocatorias 2026 de Sercotec, Corfo y FOSIS.
+- Catálogo público sin cuenta, con filtros opcionales de región, etapa, objetivo y disponibilidad.
+- Siete fichas versionadas de Sercotec, Corfo y FOSIS: financiamiento, servicios y referencias.
+- Selección de apoyos vinculada al proyecto, conservada durante registro e ingreso.
 - Beneficios, aportes, territorio, fechas y enlaces oficiales por instrumento.
 - Checklist por convocatoria como vista principal y vista transversal para reconocer antecedentes reutilizables; ambas conservan el mismo progreso.
-- Señal visible de frescura del catálogo, con próxima revisión calculada según existan convocatorias vigentes.
+- Verificadores, etapas y vigencia conservados por convocatoria, incluso al reutilizar antecedentes.
+- Motivos de correspondencia completos, enlaces a preguntas pendientes y orientación cuando no hay convocatorias abiertas en el catálogo.
+- Revisión por ficha: la disponibilidad se recalcula en cada petición y se retira cuando vence la revisión prevista.
 - Estados manuales: pendiente, en preparación, completado por el usuario sin validar y no aplica con motivo.
 
 ## Puesta en marcha
@@ -38,19 +44,22 @@ npm run verify
 npm run test:e2e
 ```
 
-La suite E2E recorre registro, creación del proyecto, confirmación de antecedentes, visualización de oportunidades y actualización del checklist en escritorio y móvil.
+La suite E2E recorre exploración pública, filtros, fuentes, selección conservada durante registro, proyectos existentes, confirmación de antecedentes y checklist en escritorio y móvil.
 
-## Cobertura piloto y límites
+## Cobertura del catálogo y límites
 
-El catálogo inicial no pretende cubrir todos los instrumentos nacionales. Incluye como referencias verificadas al 1 de septiembre de 2026:
+Al 2 de septiembre de 2026 se incorporaron cuatro fichas:
 
-- Capital Semilla Emprende Región Metropolitana de Santiago 2026, Sercotec.
-- Semilla Inicia para empresas lideradas por mujeres 2026, Corfo.
-- Emprendamos Semilla 2026, FOSIS.
+- Capital Semilla Modo Empleo Atacama 2026: postulación del 25 de agosto al 8 de septiembre, cierre a las 15:00 de Chile continental; revisión siguiente prevista para el 3 de septiembre.
+- Centros de Desarrollo de Negocios Sercotec: asesoría gratuita; consultar atención local.
+- Portal de Capacitación Sercotec: cursos gratuitos; requisitos, cupos y plazos dependen del curso.
+- Build de Start-Up Chile: programa anunciado sin fechas de próxima postulación. El beneficio descrito corresponde a la página del programa y debe contrastarse con las próximas bases.
 
-Estas convocatorias están cerradas y se muestran con valor referencial. Una nueva apertura puede cambiar montos, requisitos, formatos, territorio y plazos. Antes de postular, siempre prevalecen las bases y el portal oficial de la institución.
+Se conservan las tres referencias cerradas del piloto: Capital Semilla Emprende RM, Semilla Inicia para empresas lideradas por mujeres y Emprendamos Semilla. Mantienen su revisión original del 1 de septiembre. La selección no representa cobertura completa de Chile ni de cada institución.
 
-La política piloto exige una nueva revisión editorial cada 7 días mientras exista una convocatoria abierta o programada, y cada 30 días cuando todo el catálogo esté cerrado. Esta señal informa la frescura de la revisión; no reemplaza la consulta de las bases oficiales antes de postular.
+`src/catalog/current.json` y las referencias en `pilot.json` son la fuente editorial utilizada por la aplicación. `npm run catalog:check` valida la versión y muestra estados; `npm run db:seed` guarda una copia de auditoría sin reemplazar una versión con contenido distinto. Las selecciones se añaden a SQLite mediante una tabla nueva, sin borrar proyectos ni avances.
+
+Cada ficha registra fuentes, revisión, próxima revisión e historial. El estado abierto se suspende si vence la revisión. No existe un monitor automático ni alertas activadas: el mantenimiento es editorial, documentado en [Operación del catálogo](docs/operations/catalogo.md).
 
 La plataforma:
 
@@ -61,6 +70,12 @@ La plataforma:
 - no almacena documentos en esta primera versión.
 
 ## Documentación de producto
+
+- [Definición del catálogo para principiantes](docs/superpowers/specs/2026-09-02-catalogo-principiantes-design.md)
+- [Correcciones del recorrido inicial y verificación](docs/superpowers/plans/2026-09-02-base-principiantes.md)
+- [Benchmark de plataformas](docs/research/2026-09-02-benchmark-plataformas-financiamiento.md)
+
+- [Operación, persistencia y respaldos en Railway](docs/operations/railway.md)
 
 - [Especificación de diseño](docs/superpowers/specs/2026-08-27-asistente-proyectos-chile-design.md)
 - [Plan de implementación](docs/superpowers/plans/2026-08-28-asistente-proyectos-chile-mvp.md)

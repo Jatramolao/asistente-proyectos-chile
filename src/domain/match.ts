@@ -1,3 +1,5 @@
+import { getAvailability } from "./catalog";
+import { hasConfirmedValue } from "./antecedent-input";
 import type {
   AntecedentValue,
   FundingCall,
@@ -34,9 +36,7 @@ function compare(value: AntecedentValue, rule: Rule): boolean {
 
 export function evaluateRule(rule: Rule, antecedents: readonly ProjectAntecedent[]): RuleEvaluation {
   const item = antecedents.find((candidate) => candidate.key === rule.antecedentKey);
-  const isUserConfirmed = item && ["confirmed", "corrected"].includes(item.confirmationStatus);
-
-  if (!item || !isUserConfirmed) {
+  if (!item || !hasConfirmedValue(item)) {
     return {
       ruleId: rule.id,
       outcome: "unknown",
@@ -61,10 +61,7 @@ function unique<T>(values: readonly T[]): T[] {
 }
 
 function isCurrent(call: FundingCall, now: Date): boolean {
-  if (call.status !== "open") return false;
-  const opensAt = new Date(call.opensAt);
-  const closesAt = new Date(call.closesAt);
-  return now >= opensAt && now <= closesAt;
+  return ["open", "ongoing"].includes(getAvailability(call, now));
 }
 
 export function matchCall(
@@ -97,12 +94,16 @@ export function matchCall(
   } else if (preparableUnknowns.length > 0) {
     status = "requires_preparation";
     relevant = preparableUnknowns;
+  } else if (call.eligibilityCoverage === "partial") {
+    status = "insufficient_information";
+    relevant = [];
   } else {
     status = "compatible_to_review";
   }
 
   const fallbackReason = status === "call_not_current"
-    ? "La convocatoria no está vigente; se muestra solo como referencia."
+    ? "Este apoyo no tiene disponibilidad confirmada ahora; revisa su estado y fechas en la ficha."
+    : status === "insufficient_information" ? "Hay condiciones que requieren revisión en la ficha oficial; los datos confirmados no bastan para determinar admisibilidad."
     : "No hay incompatibilidades conocidas con los antecedentes confirmados; verifica siempre las bases oficiales.";
 
   return {

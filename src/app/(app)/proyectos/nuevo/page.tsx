@@ -1,8 +1,11 @@
+import { loadCatalog } from "@/server/services/catalog";
 import Link from "next/link";
 import { createProjectAction } from "@/app/actions/projects";
 import { ProjectIdeaForm } from "@/components/project-idea-form";
 
-export default function NewProjectPage() {
+export default async function NewProjectPage({ searchParams }: { searchParams: Promise<{ oportunidad?: string | string[] }> }) {
+  const query = await searchParams;
+  const opportunity = loadCatalog().calls.find(call => call.id === query.oportunidad);
   return (
     <main className="mx-auto max-w-5xl px-5 py-10 md:px-10 md:py-16" id="contenido">
       <Link className="text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href="/proyectos">← Mis proyectos</Link>
@@ -10,7 +13,8 @@ export default function NewProjectPage() {
         <section>
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--blue)]">Nuevo proyecto · Paso 1</p>
           <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-[var(--navy)] md:text-5xl">Primero, una idea en tus palabras.</h1>
-          <ProjectIdeaForm action={createProjectAction} />
+          {opportunity ? <p className="mt-4 text-sm text-[var(--green)]">Apoyo que vas a preparar: <strong>{opportunity.name}</strong></p> : null}
+          <ProjectIdeaForm action={createProjectAction} opportunityId={opportunity?.id} />
         </section>
         <aside className="border-l border-[var(--line-strong)] pl-6 text-sm leading-6 text-[var(--ink-muted)] lg:mt-20">
           <p className="font-semibold text-[var(--navy)]">No necesitas tener</p>

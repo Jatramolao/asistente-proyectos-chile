@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { CallChecklistGroup, ChecklistGroup } from "@/domain/checklist";
+import { STAGE_LABELS, type CallChecklistGroup, type ChecklistGroup } from "@/domain/checklist";
 import type { ChecklistItem, FundingCall } from "@/domain/types";
 
 type ChecklistViewProps = {
@@ -11,7 +11,7 @@ type ChecklistViewProps = {
   transversal: ChecklistGroup[];
 };
 
-function responsibleLabel(item: ChecklistItem): string {
+function responsibleLabel(item: Pick<ChecklistItem, "responsibleParty">): string {
   if (item.responsibleParty === "institution") return "Institución";
   if (item.responsibleParty === "selected_beneficiary") return "Beneficiario seleccionado";
   return "Persona postulante";
@@ -44,9 +44,20 @@ function ChecklistItemRow({
             {item.statusLabel}
           </span>
         </div>
-        <p className="mt-2 text-xs leading-5 text-[var(--ink-muted)]">
+        {showReuse ? (
+          <ul className="mt-3 space-y-2 text-xs leading-5 text-[var(--ink-muted)]" aria-label={`Condiciones por convocatoria para ${item.label}`}>
+            {item.contexts.map((context) => (
+              <li key={`${context.callId}-${context.requirementId}`}>
+                <strong>{callsById.get(context.callId)}</strong> · {STAGE_LABELS[context.stage]}
+                <p>Responsable: {responsibleLabel(context)} · Verifica: {context.verifier}</p>
+                {context.validity ? <p>Vigencia: {context.validity}</p> : null}
+              </li>
+            ))}
+          </ul>
+        ) : <p className="mt-2 text-xs leading-5 text-[var(--ink-muted)]">
           Responsable: {responsibleLabel(item)} · Verifica: {item.verifier}
-        </p>
+          {item.validity ? <span className="block">Vigencia: {item.validity}</span> : null}
+        </p>}
         {showReuse ? (
           <p className="mt-3 break-words text-xs leading-5 text-[var(--blue)]">
             Sirve para: {item.callIds.map((callId) => callsById.get(callId)).filter(Boolean).join(" · ")}
@@ -82,7 +93,7 @@ function ChecklistItemRow({
             </select>
           </div>
           <button className="mt-[1.15rem] h-10 rounded-md bg-[var(--navy)] px-3 text-xs font-semibold text-white transition-[background-color,transform] duration-150 hover:bg-[#1c426b] active:scale-[0.98]" type="submit">
-            Guardar
+            Guardar<span className="sr-only"> estado de {item.label}</span>
           </button>
         </div>
 

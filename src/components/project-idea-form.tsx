@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 type ProjectIdeaFormProps = {
+  opportunityId?: string;
   action: (formData: FormData) => void | Promise<void>;
 };
 
@@ -21,11 +22,12 @@ function SubmitButton() {
   );
 }
 
-export function ProjectIdeaForm({ action }: ProjectIdeaFormProps) {
+export function ProjectIdeaForm({ action, opportunityId }: ProjectIdeaFormProps) {
   const [length, setLength] = useState(0);
 
   return (
     <form action={action} className="mt-9">
+      {opportunityId ? <input type="hidden" name="callId" value={opportunityId} /> : null}
       <label className="block text-xl font-semibold tracking-[-0.025em] text-[var(--navy)]" htmlFor="narrative">
         Cuéntanos tu idea de proyecto
       </label>

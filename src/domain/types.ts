@@ -109,7 +109,7 @@ export type SupportType =
   | "training"
   | "technical_assistance";
 
-export type CallStatus = "open" | "scheduled" | "closed" | "verify";
+export type CallStatus = "open" | "scheduled" | "announced" | "closed" | "verify";
 export type RequirementStage = "application" | "evaluation" | "selection" | "formalization";
 export type RequirementKind = "canonical_antecedent" | "specific_document" | "institution_check";
 export type RuleOperator = "equals" | "not_equals" | "in" | "not_in" | "gte" | "lte" | "is_known";
@@ -157,11 +157,14 @@ export type FundingCall = {
   institutionId: string;
   territory: string;
   timezone: "America/Santiago";
-  opensAt: string;
-  closesAt: string;
+  opensAt: string | null;
+  closesAt: string | null;
   schedulePrecision: "date" | "datetime";
   status: CallStatus;
   isReference: boolean;
+  scheduleMode?: "window" | "ongoing";
+  eligibilityCoverage?: "partial";
+  editorial?: { reviewedAt: string; nextReviewAt: string };
   supportType: SupportType;
   benefit: Benefit;
   requirements: Requirement[];
@@ -218,4 +221,13 @@ export type ChecklistItem = {
   sourceIds: string[];
   note: string | null;
   reason: string | null;
+  contexts: Array<{
+    callId: string;
+    requirementId: string;
+    stage: RequirementStage;
+    responsibleParty: Requirement["responsibleParty"];
+    verifier: string;
+    validity: string | null;
+    sourceIds: string[];
+  }>;
 };

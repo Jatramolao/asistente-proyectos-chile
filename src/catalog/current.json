@@ -1,0 +1,708 @@
+{
+  "version": "2026-09-02.beginner.1",
+  "reviewedAt": "2026-09-02",
+  "lastDiscoveryAt": "2026-09-02",
+  "coverageNotice": "Selección inicial de apoyos de Sercotec, Corfo y FOSIS. Incluye servicios nacionales, un llamado de Atacama y referencias cerradas; no reúne todos los fondos de Chile.",
+  "discoveryScope": "Revisión puntual de Modo Empleo Atacama, Centros de Negocios, Capacitación Sercotec, Build y portal de postulaciones FOSIS. FOSIS informa cierre de Emprendamos Semilla; eventuales cupos comunales requieren consulta directa. No hay seguimiento automático.",
+  "references": {
+    "sercotec-capital-semilla-rm-2026": {
+      "scheduleMode": "window",
+      "eligibilityCoverage": "partial",
+      "discovery": {
+        "purpose": "Subsidio de $3.500.000 para gestión empresarial e inversiones del plan de trabajo.",
+        "conditions": [
+          "Ser mayor de edad",
+          "No tener inicio de actividades en primera categoría",
+          "Cumplir condiciones de deudas y registros",
+          "Completar formulario, test y video de presentación",
+          "Formalizar una nueva empresa si resulta seleccionado"
+        ],
+        "contribution": "Consultar las bases históricas: 3% de aporte. La persona beneficiaria financia el IVA y cualquier otro impuesto asociado.",
+        "nextStep": "Usa los requisitos como referencia; esta convocatoria terminó.",
+        "national": false,
+        "regions": [
+          "metropolitana"
+        ],
+        "stages": [
+          "idea",
+          "prototype"
+        ],
+        "goals": [
+          "start"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-01",
+        "nextReviewAt": "2026-10-01",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Referencia heredada del catálogo piloto. Conserva su revisión original; no se comprobó una nueva apertura.",
+        "history": [
+          {
+            "date": "2026-09-01",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    },
+    "corfo-semilla-inicia-mujeres-2026": {
+      "scheduleMode": "window",
+      "eligibilityCoverage": "partial",
+      "discovery": {
+        "purpose": "Cofinanciamiento no reembolsable de hasta $17.000.000 para validación técnica y comercial.",
+        "conditions": [
+          "Ser mujer o una empresa liderada por mujeres",
+          "Presentar una solución innovadora",
+          "Encontrarse sin ventas",
+          "Empresa con hasta 18 meses de inicio de actividades",
+          "Formular un plan de validación técnica y comercial"
+        ],
+        "contribution": "Consultar las bases históricas: 15% de aporte. Tratamiento de impuestos no informado.",
+        "nextStep": "Usa los requisitos como referencia; esta convocatoria terminó.",
+        "national": true,
+        "regions": [],
+        "stages": [
+          "idea",
+          "prototype"
+        ],
+        "goals": [
+          "validate"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-01",
+        "nextReviewAt": "2026-10-01",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Referencia heredada del catálogo piloto. Conserva su revisión original; no se comprobó una nueva apertura.",
+        "history": [
+          {
+            "date": "2026-09-01",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    },
+    "fosis-emprendamos-semilla-2026": {
+      "scheduleMode": "window",
+      "eligibilityCoverage": "partial",
+      "discovery": {
+        "purpose": "Capacitación, acompañamiento y financiamiento para iniciar o fortalecer un negocio; el monto y los cupos dependen de la oferta territorial.",
+        "conditions": [
+          "Ser mayor de 18 años",
+          "Contar con cédula vigente y ClaveÚnica",
+          "Residir en una comuna con ejecución del programa",
+          "Pertenecer a los tramos de mayor vulnerabilidad del RSH",
+          "Completar y enviar el formulario del portal FOSIS"
+        ],
+        "contribution": "Consultar las bases históricas: Aporte no informado. Tratamiento de impuestos no informado.",
+        "nextStep": "Usa los requisitos como referencia; esta convocatoria terminó.",
+        "national": true,
+        "regions": [],
+        "stages": [
+          "idea",
+          "prototype"
+        ],
+        "goals": [
+          "start"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-01",
+        "nextReviewAt": "2026-10-01",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Referencia heredada del catálogo piloto. Conserva su revisión original; no se comprobó una nueva apertura.",
+        "history": [
+          {
+            "date": "2026-09-01",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    }
+  },
+  "instruments": [
+    {
+      "id": "sercotec-modo-empleo-atacama-2026",
+      "institutionId": "sercotec",
+      "name": "Capital Semilla Modo Empleo · Atacama 2026",
+      "description": "Poner en marcha un negocio en Atacama."
+    },
+    {
+      "id": "sercotec-centros",
+      "institutionId": "sercotec",
+      "name": "Centros de Desarrollo de Negocios",
+      "description": "Recibir orientación y apoyo para tu negocio."
+    },
+    {
+      "id": "sercotec-capacitacion",
+      "institutionId": "sercotec",
+      "name": "Portal de Capacitación Sercotec",
+      "description": "Aprender conceptos y herramientas antes de postular."
+    },
+    {
+      "id": "corfo-build-programa",
+      "institutionId": "corfo",
+      "name": "Build · Start-Up Chile",
+      "description": "Preparar la validación inicial de un emprendimiento de alto impacto."
+    }
+  ],
+  "sources": [
+    {
+      "id": "modo-atacama-page",
+      "institutionId": "sercotec",
+      "title": "Ficha oficial de Modo Empleo Atacama",
+      "officialUrl": "https://www.sercotec.cl/convocatoria/capital-semilla-modo-empleo-region-de-atacama/",
+      "sourceType": "official_page",
+      "scope": "Descripción, acceso y condiciones del apoyo",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    },
+    {
+      "id": "modo-atacama-bases",
+      "institutionId": "sercotec",
+      "title": "Bases Modo Empleo Atacama 2026",
+      "officialUrl": "https://www.sercotec.cl/wp-content/uploads/2026/08/Bases-Capital-Semilla-Modo-Empleo-Atacama-2026-1.pdf",
+      "sourceType": "bases",
+      "scope": "Páginas 3–11: beneficio, aporte, exclusiones y plazo; Anexo 1: verificadores.",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    },
+    {
+      "id": "centros-page",
+      "institutionId": "sercotec",
+      "title": "Centros de Desarrollo de Negocios: descripción oficial",
+      "officialUrl": "https://sitios.sercotec.cl/centros-de-negocios/nosotros/",
+      "sourceType": "official_page",
+      "scope": "Descripción, acceso y condiciones del apoyo",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    },
+    {
+      "id": "capacitacion-page",
+      "institutionId": "sercotec",
+      "title": "Portal de Capacitación Sercotec",
+      "officialUrl": "https://capacitacion.sercotec.cl/portal/",
+      "sourceType": "official_page",
+      "scope": "Descripción, acceso y condiciones del apoyo",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    },
+    {
+      "id": "sercotec-servicios",
+      "institutionId": "sercotec",
+      "title": "Sercotec: servicios de capacitación y orientación",
+      "officialUrl": "https://www.sercotec.cl/convocatoria/capital-semilla-modo-empleo-region-de-atacama/",
+      "sourceType": "official_page",
+      "scope": "Menú oficial: Portal de Capacitación gratuito para emprendedores y mipymes.",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    },
+    {
+      "id": "build-page",
+      "institutionId": "corfo",
+      "title": "Build: programa y próxima convocatoria",
+      "officialUrl": "https://startupchile.org/postula/build/",
+      "sourceType": "official_page",
+      "scope": "Descripción, acceso y condiciones del apoyo",
+      "reviewedAt": "2026-09-02",
+      "status": "current"
+    }
+  ],
+  "calls": [
+    {
+      "id": "sercotec-modo-empleo-atacama-2026",
+      "instrumentId": "sercotec-modo-empleo-atacama-2026",
+      "name": "Capital Semilla Modo Empleo · Atacama 2026",
+      "institutionId": "sercotec",
+      "territory": "Región de Atacama",
+      "timezone": "America/Santiago",
+      "opensAt": "2026-08-25T12:00:00-04:00",
+      "closesAt": "2026-09-08T15:00:00-03:00",
+      "schedulePrecision": "datetime",
+      "status": "open",
+      "isReference": false,
+      "scheduleMode": "window",
+      "eligibilityCoverage": "partial",
+      "supportType": "cofinanced_subsidy",
+      "benefit": {
+        "summary": "Apoyo para crear un negocio formal, con inversión y gestión empresarial.",
+        "maximumAmountClp": 3000000,
+        "coveragePercent": null,
+        "beneficiaryContributionPercent": 3,
+        "taxTreatment": "Impuestos a cargo de la persona beneficiaria.",
+        "allowedCosts": [
+          "Inversión hasta $2.800.000.",
+          "Gestión empresarial entre $200.000 y $500.000."
+        ],
+        "excludedCosts": [
+          "IVA y otros impuestos.",
+          "Revisar todas las exclusiones en las bases."
+        ]
+      },
+      "requirements": [
+        {
+          "id": "modo-residencia",
+          "label": "Edad y domicilio",
+          "description": "Comprobar segmento y domicilio.",
+          "sourceIds": [
+            "modo-atacama-page"
+          ],
+          "antecedentKeys": [
+            "applicant.age",
+            "applicant.gender",
+            "applicant.region"
+          ],
+          "stage": "application",
+          "verifier": "Verificadores del Anexo 1 de las bases",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "applicant",
+          "validity": null
+        },
+        {
+          "id": "modo-sii",
+          "label": "Situación ante el SII",
+          "description": "Sin actividad previa de primera categoría.",
+          "sourceIds": [
+            "modo-atacama-page"
+          ],
+          "antecedentKeys": [
+            "applicant.sii_first_category"
+          ],
+          "stage": "application",
+          "verifier": "Consulta tributaria según bases",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "applicant",
+          "validity": null
+        },
+        {
+          "id": "modo-cotizaciones",
+          "label": "Certificado de cotizaciones",
+          "description": "Acreditar ausencia de cotizaciones durante seis meses.",
+          "sourceIds": [
+            "modo-atacama-page"
+          ],
+          "antecedentKeys": [],
+          "stage": "application",
+          "verifier": "Certificado previsional exigido en las bases",
+          "kind": "specific_document",
+          "responsibleParty": "applicant",
+          "validity": "Seis meses previos al inicio de la convocatoria"
+        },
+        {
+          "id": "modo-admisibilidad",
+          "label": "Otras condiciones de admisibilidad",
+          "description": "Revisar deudas, pensiones de alimentos, propiedad empresarial e incompatibilidades.",
+          "sourceIds": [
+            "modo-atacama-bases"
+          ],
+          "antecedentKeys": [
+            "applicant.labor_tax_debt",
+            "applicant.alimony_registry",
+            "applicant.company_ownership_percent"
+          ],
+          "stage": "application",
+          "verifier": "Anexo 1 y declaraciones exigidas por Sercotec",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "applicant",
+          "validity": null
+        },
+        {
+          "id": "modo-postulacion",
+          "label": "Formulario, presupuesto y video",
+          "description": "Completar test, Canvas, costos y pitch de hasta 90 segundos.",
+          "sourceIds": [
+            "modo-atacama-page"
+          ],
+          "antecedentKeys": [
+            "essence.problem",
+            "essence.solution",
+            "essence.customer",
+            "execution.budget"
+          ],
+          "stage": "application",
+          "verifier": "Formulario y video en el portal Sercotec",
+          "kind": "specific_document",
+          "responsibleParty": "applicant",
+          "validity": null
+        },
+        {
+          "id": "modo-formalizacion",
+          "label": "Formalización y aporte",
+          "description": "Formalizar la nueva empresa y aportar recursos si resultas seleccionado.",
+          "sourceIds": [
+            "modo-atacama-bases"
+          ],
+          "antecedentKeys": [
+            "execution.cofunding"
+          ],
+          "stage": "formalization",
+          "verifier": "Contrato y verificadores del Anexo 1",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "selected_beneficiary",
+          "validity": null
+        }
+      ],
+      "rules": [
+        {
+          "id": "modo-age",
+          "antecedentKey": "applicant.age",
+          "operator": "gte",
+          "expectedValue": 18,
+          "decisive": true,
+          "preparable": false,
+          "passReason": "Dato declarado consistente: Ser mayor de edad",
+          "contradictionReason": "Revisa esta condición: Ser mayor de edad",
+          "unknownReason": "Falta confirmar: Ser mayor de edad",
+          "sourceIds": [
+            "modo-atacama-page"
+          ]
+        },
+        {
+          "id": "modo-sii_first_category",
+          "antecedentKey": "applicant.sii_first_category",
+          "operator": "equals",
+          "expectedValue": false,
+          "decisive": true,
+          "preparable": false,
+          "passReason": "Dato declarado consistente: No registrar inicio de actividades en primera categoría",
+          "contradictionReason": "Revisa esta condición: No registrar inicio de actividades en primera categoría",
+          "unknownReason": "Falta confirmar: No registrar inicio de actividades en primera categoría",
+          "sourceIds": [
+            "modo-atacama-page"
+          ]
+        },
+        {
+          "id": "modo-labor_tax_debt",
+          "antecedentKey": "applicant.labor_tax_debt",
+          "operator": "equals",
+          "expectedValue": false,
+          "decisive": true,
+          "preparable": false,
+          "passReason": "Dato declarado consistente: No tener deudas laborales o tributarias morosas",
+          "contradictionReason": "Revisa esta condición: No tener deudas laborales o tributarias morosas",
+          "unknownReason": "Falta confirmar: No tener deudas laborales o tributarias morosas",
+          "sourceIds": [
+            "modo-atacama-page"
+          ]
+        },
+        {
+          "id": "modo-alimony_registry",
+          "antecedentKey": "applicant.alimony_registry",
+          "operator": "equals",
+          "expectedValue": false,
+          "decisive": true,
+          "preparable": false,
+          "passReason": "Dato declarado consistente: No figurar en el registro de deudores de alimentos",
+          "contradictionReason": "Revisa esta condición: No figurar en el registro de deudores de alimentos",
+          "unknownReason": "Falta confirmar: No figurar en el registro de deudores de alimentos",
+          "sourceIds": [
+            "modo-atacama-page"
+          ]
+        },
+        {
+          "id": "modo-company_ownership_percent",
+          "antecedentKey": "applicant.company_ownership_percent",
+          "operator": "lte",
+          "expectedValue": 50,
+          "decisive": true,
+          "preparable": false,
+          "passReason": "Dato declarado consistente: Participación empresarial no mayor a 50%",
+          "contradictionReason": "Revisa esta condición: Participación empresarial no mayor a 50%",
+          "unknownReason": "Falta confirmar: Participación empresarial no mayor a 50%",
+          "sourceIds": [
+            "modo-atacama-page"
+          ]
+        }
+      ],
+      "sourceIds": [
+        "modo-atacama-page",
+        "modo-atacama-bases"
+      ],
+      "discovery": {
+        "purpose": "Poner en marcha un negocio en Atacama.",
+        "conditions": [
+          "Tener domicilio en Atacama y ser mayor de edad.",
+          "Sin inicio de actividades en primera categoría.",
+          "Sin cotizaciones previsionales durante los seis meses anteriores al inicio.",
+          "Segmentos: 18–29 años; mujeres de 30–54; personas de 55 o más.",
+          "Revisar deudas, registros, participaciones e incompatibilidades en las bases."
+        ],
+        "contribution": "Aportar 3% del subsidio y pagar los impuestos del proyecto.",
+        "nextStep": "Lee las bases y revisa tu situación antes de preparar la postulación.",
+        "national": false,
+        "regions": [
+          "atacama"
+        ],
+        "stages": [
+          "idea",
+          "prototype"
+        ],
+        "goals": [
+          "start"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-02",
+        "nextReviewAt": "2026-09-03",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Ficha contrastada con bases, sección 2.1 (página 11): 25/08 12:00–08/09 15:00, hora continental. Se aplican los offsets de America/Santiago de cada fecha. Revisión asistida, sin revisor humano independiente.",
+        "history": [
+          {
+            "date": "2026-09-02",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sercotec-centros",
+      "instrumentId": "sercotec-centros",
+      "name": "Centros de Desarrollo de Negocios",
+      "institutionId": "sercotec",
+      "territory": "Todo Chile",
+      "timezone": "America/Santiago",
+      "opensAt": null,
+      "closesAt": null,
+      "schedulePrecision": "date",
+      "status": "open",
+      "isReference": false,
+      "scheduleMode": "ongoing",
+      "eligibilityCoverage": "partial",
+      "supportType": "technical_assistance",
+      "benefit": {
+        "summary": "Acompañamiento y asesoría técnica gratuitos para desarrollar capacidades empresariales.",
+        "maximumAmountClp": null,
+        "coveragePercent": null,
+        "beneficiaryContributionPercent": null,
+        "taxTreatment": null,
+        "allowedCosts": [],
+        "excludedCosts": []
+      },
+      "requirements": [
+        {
+          "id": "centros-contacto",
+          "label": "Contactar al centro de tu región",
+          "description": "Consulta la atención adecuada para tu etapa.",
+          "sourceIds": [
+            "centros-page"
+          ],
+          "antecedentKeys": [
+            "applicant.region",
+            "essence.problem"
+          ],
+          "stage": "application",
+          "verifier": "Confirmación de atención por el centro",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "applicant",
+          "validity": null
+        }
+      ],
+      "rules": [],
+      "sourceIds": [
+        "centros-page"
+      ],
+      "discovery": {
+        "purpose": "Recibir orientación y apoyo para tu negocio.",
+        "conditions": [
+          "Red presente en todas las regiones.",
+          "Atiende mipymes y cooperativas; consulta al centro si estás en etapa de idea.",
+          "La atención se coordina con el centro y depende de su disponibilidad."
+        ],
+        "contribution": "La asesoría del programa es gratuita; no entrega un subsidio en dinero.",
+        "nextStep": "Contacta al centro de tu región para acordar orientación.",
+        "national": true,
+        "regions": [],
+        "stages": [
+          "idea",
+          "prototype",
+          "operating"
+        ],
+        "goals": [
+          "learn"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-02",
+        "nextReviewAt": "2026-09-09",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Consulta de la página oficial. Revisión asistida; no equivale a validación de la institución.",
+        "history": [
+          {
+            "date": "2026-09-02",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "sercotec-capacitacion",
+      "instrumentId": "sercotec-capacitacion",
+      "name": "Portal de Capacitación Sercotec",
+      "institutionId": "sercotec",
+      "territory": "Todo Chile",
+      "timezone": "America/Santiago",
+      "opensAt": null,
+      "closesAt": null,
+      "schedulePrecision": "date",
+      "status": "open",
+      "isReference": false,
+      "scheduleMode": "ongoing",
+      "eligibilityCoverage": "partial",
+      "supportType": "training",
+      "benefit": {
+        "summary": "Cursos en línea para fortalecer habilidades de gestión de tu emprendimiento.",
+        "maximumAmountClp": null,
+        "coveragePercent": null,
+        "beneficiaryContributionPercent": null,
+        "taxTreatment": null,
+        "allowedCosts": [],
+        "excludedCosts": []
+      },
+      "requirements": [
+        {
+          "id": "capacitacion-curso",
+          "label": "Elegir un curso y revisar acceso",
+          "description": "Consulta requisitos y modalidad de inscripción en el portal.",
+          "sourceIds": [
+            "capacitacion-page"
+          ],
+          "antecedentKeys": [],
+          "stage": "application",
+          "verifier": "Condiciones del curso elegido",
+          "kind": "specific_document",
+          "responsibleParty": "applicant",
+          "validity": null
+        }
+      ],
+      "rules": [],
+      "sourceIds": [
+        "capacitacion-page",
+        "sercotec-servicios"
+      ],
+      "discovery": {
+        "purpose": "Aprender conceptos y herramientas antes de postular.",
+        "conditions": [
+          "Dirigido a emprendedores y pequeños empresarios.",
+          "Elige un curso según la etapa de tu negocio.",
+          "Revisa requisitos y cupos de cada curso; los talleres tienen sus propios plazos."
+        ],
+        "contribution": "Capacitación gratuita. No es financiamiento para el proyecto.",
+        "nextStep": "Abre el portal y elige un curso adecuado a lo que necesitas aprender.",
+        "national": true,
+        "regions": [],
+        "stages": [
+          "idea",
+          "prototype",
+          "operating"
+        ],
+        "goals": [
+          "learn"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-02",
+        "nextReviewAt": "2026-09-09",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Consulta de la página oficial. Revisión asistida; no equivale a validación de la institución.",
+        "history": [
+          {
+            "date": "2026-09-02",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "corfo-build-programa",
+      "instrumentId": "corfo-build-programa",
+      "name": "Build · Start-Up Chile",
+      "institutionId": "corfo",
+      "territory": "Todo Chile",
+      "timezone": "America/Santiago",
+      "opensAt": null,
+      "closesAt": null,
+      "schedulePrecision": "date",
+      "status": "announced",
+      "isReference": false,
+      "scheduleMode": "window",
+      "eligibilityCoverage": "partial",
+      "supportType": "non_refundable_subsidy",
+      "benefit": {
+        "summary": "Preaceleración de cuatro meses, desde una idea validada hasta una primera versión del producto.",
+        "maximumAmountClp": 15000000,
+        "coveragePercent": null,
+        "beneficiaryContributionPercent": null,
+        "taxTreatment": null,
+        "allowedCosts": [],
+        "excludedCosts": []
+      },
+      "requirements": [
+        {
+          "id": "build-evidencia",
+          "label": "Evidencia de una idea validada",
+          "description": "Organiza lo aprendido de potenciales clientes.",
+          "sourceIds": [
+            "build-page"
+          ],
+          "antecedentKeys": [
+            "essence.evidence",
+            "technology.validation"
+          ],
+          "stage": "application",
+          "verifier": "Revisar bases del próximo llamado",
+          "kind": "canonical_antecedent",
+          "responsibleParty": "applicant",
+          "validity": null
+        }
+      ],
+      "rules": [],
+      "sourceIds": [
+        "build-page"
+      ],
+      "discovery": {
+        "purpose": "Preparar la validación inicial de un emprendimiento de alto impacto.",
+        "conditions": [
+          "Dirigido a proyectos desde una idea validada hasta un prototipo temprano.",
+          "La página anuncia una próxima convocatoria, sin calendario publicado.",
+          "Monto y condiciones de la nueva convocatoria deben confirmarse en sus bases."
+        ],
+        "contribution": "La página no precisa aporte propio ni impuestos para un nuevo llamado. No se asumen en cero.",
+        "nextStep": "Conoce el programa y reúne evidencia de tu idea mientras se publican fechas.",
+        "national": true,
+        "regions": [],
+        "stages": [
+          "idea",
+          "prototype"
+        ],
+        "goals": [
+          "validate"
+        ]
+      },
+      "editorial": {
+        "state": "published",
+        "owner": "Impulsa Proyectos · revisión asistida",
+        "reviewedAt": "2026-09-02",
+        "nextReviewAt": "2026-09-09",
+        "version": "2026-09-02.beginner.1",
+        "evidenceNote": "Consulta de la página oficial. Revisión asistida; no equivale a validación de la institución.",
+        "history": [
+          {
+            "date": "2026-09-02",
+            "change": "Ficha incorporada a la versión 2026-09-02.beginner.1"
+          }
+        ]
+      }
+    }
+  ]
+}

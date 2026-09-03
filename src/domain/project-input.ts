@@ -8,7 +8,11 @@ const projectNarrativeSchema = z
 
 export function parseProjectNarrative(input: string) {
   const narrative = projectNarrativeSchema.parse(input);
-  const name = narrative.slice(0, 80).trim().replace(/[.,;:]$/, "");
+  const prefix = narrative.slice(0, 80);
+  const completeWords = narrative.length > 80 && !/\s/.test(narrative[80])
+    ? prefix.slice(0, prefix.lastIndexOf(" ") === -1 ? 0 : prefix.lastIndexOf(" "))
+    : prefix;
+  const name = completeWords.trim().replace(/[.,;:]$/, "") || "Mi proyecto";
 
   return { narrative, name };
 }
