@@ -1,9 +1,9 @@
 {
-  "version": "2026-09-02.beginner.1",
-  "reviewedAt": "2026-09-02",
-  "lastDiscoveryAt": "2026-09-02",
-  "coverageNotice": "Selección inicial de apoyos de Sercotec, Corfo y FOSIS. Incluye servicios nacionales, un llamado de Atacama y referencias cerradas; no reúne todos los fondos de Chile.",
-  "discoveryScope": "Revisión puntual de Modo Empleo Atacama, Centros de Negocios, Capacitación Sercotec, Build y portal de postulaciones FOSIS. FOSIS informa cierre de Emprendamos Semilla; eventuales cupos comunales requieren consulta directa. No hay seguimiento automático.",
+  "version": "2026-09-07.allin.1",
+  "reviewedAt": "2026-09-07",
+  "lastDiscoveryAt": "2026-09-07",
+  "coverageNotice": "Selección inicial de apoyos de Sercotec, Corfo, FOSIS y el torneo All In Chile de Duoc UC. Incluye servicios, convocatorias y referencias cerradas; no reúne todos los apoyos de Chile.",
+  "discoveryScope": "Revisión puntual de Modo Empleo Atacama, Centros de Negocios, Capacitación Sercotec, Build y portal de postulaciones FOSIS. Incorporación y revisión de All In Chile Duoc UC el 7 de septiembre de 2026; los demás apoyos conservan sus fechas individuales de revisión. FOSIS informa cierre de Emprendamos Semilla; eventuales cupos comunales requieren consulta directa. No hay seguimiento automático.",
   "references": {
     "sercotec-capital-semilla-rm-2026": {
       "scheduleMode": "window",

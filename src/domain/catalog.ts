@@ -46,9 +46,11 @@ export function formatCatalogDate(value: string | null): string {
 }
 
 export function supportLabel(call: FundingCall): string {
+  if (call.supportType === "innovation_tournament") return "Torneo estudiantil";
   return call.supportType === "training" ? "Capacitación" : call.supportType === "technical_assistance" ? "Asesoría" : "Financiamiento";
 }
 export function benefitLabel(call: FundingCall): string {
+  if (call.supportType === "innovation_tournament") return "Formación, mentorías y premios";
   if (["training", "technical_assistance"].includes(call.supportType)) return "Servicio gratuito";
   return call.benefit.maximumAmountClp === null ? "Monto no informado" : `Hasta ${new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(call.benefit.maximumAmountClp)}`;
 }

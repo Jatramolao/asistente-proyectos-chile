@@ -5,6 +5,7 @@ import { z } from "zod";
 import { getDb } from "@/server/db/client";
 import { projectRepository } from "@/server/db/repositories";
 import { requireSession } from "@/server/session";
+import { getCallResponse } from "@/domain/call-responses";
 
 const updateSchema = z.object({
   projectId: z.string().uuid(),
@@ -32,6 +33,7 @@ export async function updateChecklistItemAction(formData: FormData): Promise<voi
     reason: formData.get("reason") ?? "",
   });
 
+  if (getCallResponse(input.itemKey)) throw new Error("Edita esta respuesta desde su etapa de preparación.");
   if (input.status === "not_applicable" && !input.reason) {
     throw new Error("Indica por qué este requisito no aplica.");
   }

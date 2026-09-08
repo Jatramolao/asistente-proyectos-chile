@@ -19,7 +19,8 @@ test("creates a project from an idea and keeps inferred facts unvalidated", asyn
   await expect(page).toHaveURL(/\/proyectos\/[a-f0-9-]+$/);
   await expect(page.getByRole("heading", { name: "Fondos y beneficios relacionados" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Checklist de preparación" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Por convocatoria" })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("#checklist article")).toHaveCount(0);
+  await expect(page.getByText("Elige un apoyo para comenzar tu preparación.")).toBeVisible();
   await expect(page.getByRole("heading", { name: /Capital Semilla Emprende Región Metropolitana/i }).first()).toBeVisible();
   await expect(page.getByText("Actualización por oportunidad")).toBeVisible();
   await expect(page.getByText("Inferido, pendiente de confirmación").first()).toBeVisible();
@@ -51,12 +52,5 @@ test("creates a project from an idea and keeps inferred facts unvalidated", asyn
   await firstOpportunity.getByRole("link", { name: "Edad", exact: true }).click();
   await expect(ageAnswer.getByRole("textbox")).toBeVisible();
 
-  await page.getByRole("link", { name: "Vista transversal" }).click();
-  await expect(page).toHaveURL(/\?checklist=transversal#checklist$/);
-  await expect(page.getByRole("link", { name: "Vista transversal" })).toHaveAttribute("aria-current", "page");
-  const ageChecklistItem = page.locator("#checklist article").filter({ has: page.getByRole("heading", { name: "Edad", exact: true }) });
-  await expect(ageChecklistItem.getByText("Responsable: Persona postulante · Verifica: FOSIS", { exact: true })).toBeVisible();
-  await ageChecklistItem.getByLabel("Estado de Edad").selectOption("user_completed_unvalidated");
-  await ageChecklistItem.getByRole("button", { name: "Guardar estado de Edad" }).click();
-  await expect(ageChecklistItem.getByText("Completado por el usuario, no validado")).toBeVisible();
+  await expect(page.locator("#checklist article")).toHaveCount(0);
 });

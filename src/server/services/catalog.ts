@@ -1,4 +1,5 @@
 import currentCatalog from "@/catalog/current.json";
+import allIn from "@/catalog/allin.json";
 import { CurrentCatalogSchema, type CurrentCatalog } from "@/catalog/current.schema";
 import { randomUUID } from "node:crypto";
 import Database from "better-sqlite3";
@@ -27,10 +28,10 @@ export function loadCatalog(): CurrentCatalog {
   const historic = pilot.calls.map(call => ({ ...call, ...references[call.id as keyof typeof references] }));
   return CurrentCatalogSchema.parse({
     ...current,
-    institutions: pilot.institutions,
-    instruments: [...pilot.instruments, ...current.instruments],
-    sources: [...pilot.sources, ...current.sources],
-    calls: [...current.calls, ...historic],
+    institutions: [...pilot.institutions, allIn.institution],
+    instruments: [...pilot.instruments, ...current.instruments, allIn.instrument],
+    sources: [...pilot.sources, ...current.sources, ...allIn.sources],
+    calls: [...current.calls, ...historic, allIn.call],
   });
 }
 

@@ -3,11 +3,14 @@ import { notFound } from "next/navigation";
 import { ArrowUpRight, CircleAlert, FileCheck2 } from "lucide-react";
 import { confirmAntecedentAction, removeCallAction } from "@/app/actions/projects";
 import { updateChecklistItemAction } from "@/app/actions/checklist";
+import { saveCallResponseAction } from "@/app/actions/call-responses";
 import { getAntecedentDefinition } from "@/domain/antecedents";
 import { getBeginnerProgress } from "@/domain/beginner-guide";
 import { buildChecklist, buildChecklistByCall } from "@/domain/checklist";
 import { AVAILABILITY_LABELS, benefitLabel, formatCatalogDate, getAvailability, reviewIsDue } from "@/domain/catalog";
-import { matchCall } from "@/domain/match";
+import { evaluateRule, matchCall } from "@/domain/match";
+import { buildPreparationJourney } from "@/domain/preparation-journey";
+import { PreparationJourney } from "@/components/preparation-journey";
 import type { FundingCall, MatchStatus } from "@/domain/types";
 import { ProjectGuide } from "@/components/project-guide";
 import { ChecklistView } from "@/components/checklist-view";
@@ -29,7 +32,7 @@ export default async function ProjectPage({
   searchParams,
 }: {
   params: Promise<{ projectId: string }>;
-  searchParams: Promise<{ checklist?: string | string[] }>;
+  searchParams: Promise<{ checklist?: string | string[]; call?: string | string[]; view?: string | string[]; stage?: string | string[] }>;
 }) {
   const { projectId } = await params;
   const query = await searchParams;
@@ -44,6 +47,7 @@ export default async function ProjectPage({
   const selectedIds = projects.listSelectedCalls(userId, projectId);
   const selectedCalls = catalog.calls.filter(call => selectedIds.includes(call.id));
   const preparationCalls = selectedCalls.length ? selectedCalls : catalog.calls;
+  const focusedCall = selectedCalls.find(call => call.id === query.call) ?? selectedCalls[0];
   const now = new Date();
   const sources = new Map(catalog.sources.map((source) => [source.id, source]));
   const results = preparationCalls.map((call) => ({
@@ -51,7 +55,8 @@ export default async function ProjectPage({
     match: matchCall(call as FundingCall, antecedents, now, catalog.version),
   }));
   const checklistInput = {
-    calls: preparationCalls as FundingCall[],
+    calls: selectedCalls as FundingCall[],
+    antecedents,
     progress: projects.getChecklistProgress(userId, projectId),
   };
   const checklist = buildChecklist(checklistInput);
@@ -59,10 +64,27 @@ export default async function ProjectPage({
   const { completed, total } = getBeginnerProgress(antecedents);
   const currentCalls = results.filter(({ call }) => getAvailability(call, now) === "open").length;
   const serviceCount = results.filter(({ call }) => getAvailability(call, now) === "ongoing").length;
+  const journey = focusedCall ? buildPreparationJourney({ call: focusedCall as FundingCall, antecedents, progress: checklistInput.progress }) : null;
+
+  if (focusedCall && journey && query.view !== "record" && !query.checklist) {
+    const availability = getAvailability(focusedCall, now);
+    const warnings = focusedCall.rules.map(rule => evaluateRule(rule, antecedents))
+      .filter(evaluation => evaluation.outcome === "contradiction").map(evaluation => evaluation.reason);
+    if (availability !== "open" && availability !== "ongoing") warnings.unshift("Esta convocatoria no tiene disponibilidad confirmada ahora. Puedes preparar antecedentes, pero revisa las fechas en la ficha oficial.");
+    return <main className="min-h-[calc(100vh-5rem)] bg-[var(--surface)]" id="contenido">
+      <div className="mx-auto max-w-7xl px-5 py-8 md:px-10 md:py-10">
+        <PreparationJourney key={`${projectId}-${focusedCall.id}`} projectId={projectId} projectName={project.name}
+          call={focusedCall} stages={journey} warnings={warnings}
+          availabilityLabel={`${AVAILABILITY_LABELS[availability]}${focusedCall.closesAt ? ` · Cierre: ${formatCatalogDate(focusedCall.closesAt)}` : ""}`}
+          antecedentAction={confirmAntecedentAction} checklistAction={updateChecklistItemAction} responseAction={saveCallResponseAction} initialStage={typeof query.stage === "string" ? query.stage : undefined} />
+      </div>
+    </main>;
+  }
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-8 md:px-10 md:py-12" id="contenido">
       <Link className="text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href="/proyectos">← Mis proyectos</Link>
+      {journey && focusedCall ? <Link className="ml-6 text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href={`?call=${focusedCall.id}`}>Volver a mi recorrido</Link> : null}
 
       <header className="mt-7 border-b border-[var(--line-strong)] pb-8">
         <div className="flex flex-wrap items-start justify-between gap-6">
@@ -115,7 +137,7 @@ export default async function ProjectPage({
 
         <div className="mt-6 rounded-lg border border-[var(--line)] bg-[var(--surface)] p-5">
           <p className="text-sm font-semibold text-[var(--navy)]">{selectedCalls.length ? `Preparando ${selectedCalls.length} ${selectedCalls.length === 1 ? "apoyo elegido" : "apoyos elegidos"}` : "Aún no has elegido un apoyo"}</p>
-          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">{selectedCalls.length ? "El checklist se concentra en tu selección. Quitar un apoyo conserva las respuestas y avances guardados." : "Explora las fichas y elige un apoyo para concentrar tu preparación. Por ahora puedes consultar todos los requisitos de referencia."}</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">{selectedCalls.length ? "El checklist se concentra en tu selección. Quitar un apoyo conserva las respuestas y avances guardados." : "Explora las fichas y elige un apoyo para concentrar tu preparación. No necesitas preparar todos los apoyos del catálogo."}</p>
           <Link className="mt-3 inline-block text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href="/catalogo">Explorar y elegir apoyos →</Link>
         </div>
 
@@ -158,7 +180,10 @@ export default async function ProjectPage({
                     </a>
                   ) : null}
                   <Link className="mt-4 block text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href={`/catalogo/${call.id}`}>Ver ficha y requisitos completos</Link>
-                  {selectedIds.includes(call.id) ? <form action={removeCallAction} className="mt-3"><input type="hidden" name="projectId" value={projectId} /><input type="hidden" name="callId" value={call.id} /><button type="submit" className="text-xs text-[var(--ink-muted)] underline underline-offset-4">Quitar de mi preparación</button></form> : null}
+                  {selectedIds.includes(call.id) ? <>
+                    <Link className="mt-3 block text-sm font-semibold text-[var(--blue)] underline underline-offset-4" href={`?call=${call.id}`}>Continuar preparando este apoyo</Link>
+                    <form action={removeCallAction} className="mt-3"><input type="hidden" name="projectId" value={projectId} /><input type="hidden" name="callId" value={call.id} /><button type="submit" className="text-xs text-[var(--ink-muted)] underline underline-offset-4">Quitar de mi preparación</button></form>
+                  </> : null}
                   <p className="mt-2 text-xs text-[var(--ink-muted)]">{reviewIsDue(call, now) ? "Revisión pendiente" : `Próxima revisión: ${formatCatalogDate(call.editorial.nextReviewAt)}`}</p>
                   <p className="mt-2 text-[0.68rem] leading-4 text-[var(--ink-muted)]">Fuente revisada el {primarySource ? formatCatalogDate(primarySource.reviewedAt) : "—"}.</p>
                 </div>
@@ -174,7 +199,8 @@ export default async function ProjectPage({
           <h2 className="mt-2 text-3xl font-semibold tracking-[-0.04em] text-[var(--navy)] text-balance">Checklist de preparación</h2>
           <p className="mt-3 text-sm leading-6 text-[var(--ink-muted)] text-pretty">Revisa primero lo que pide cada convocatoria o cambia a la vista transversal para reconocer antecedentes reutilizables. El estado guardado es único en ambas vistas.</p>
         </div>
-        <ChecklistView action={updateChecklistItemAction} activeView={activeChecklistView} byCall={checklistByCall} calls={preparationCalls as FundingCall[]} projectId={projectId} transversal={checklist} />
+        {selectedCalls.length ? <ChecklistView action={updateChecklistItemAction} activeView={activeChecklistView} byCall={checklistByCall} calls={selectedCalls as FundingCall[]} projectId={projectId} transversal={checklist} recordCallId={journey ? focusedCall?.id : undefined} />
+          : <p className="mt-6 text-sm text-[var(--ink-muted)]">Elige un apoyo para comenzar tu preparación.</p>}
       </section>
 
       <section className="border-t border-[var(--line-strong)] py-10" id="fuentes">

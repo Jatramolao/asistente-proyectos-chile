@@ -7,7 +7,7 @@ describe("HomePage", () => {
     render(<HomePage />);
 
     expect(screen.getByRole("heading", { name: /ordena tu idea/i })).toBeInTheDocument();
-    expect(screen.getByText(/catálogo para empezar: 7 apoyos y referencias/i)).toBeInTheDocument();
+    expect(screen.getByText(/catálogo para empezar: 8 apoyos y referencias/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /explorar apoyos sin cuenta/i })).toHaveAttribute("href", "/catalogo");
     expect(screen.getByText(/no evalúa ni valida documentos/i)).toBeInTheDocument();
   });

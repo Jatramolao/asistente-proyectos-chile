@@ -55,7 +55,7 @@ export async function selectCallAction(formData: FormData): Promise<void> {
   if (!loadCatalog().calls.some(call => call.id === callId)) throw new Error("Este apoyo no existe en el catálogo.");
   if (!projectRepository(getDb()).selectCall(userId, projectId, callId)) throw new Error("No tienes acceso a este proyecto.");
   revalidatePath(`/proyectos/${projectId}`);
-  redirect(`/proyectos/${projectId}#oportunidades`);
+  redirect(`/proyectos/${projectId}?call=${encodeURIComponent(callId)}`);
 }
 
 export async function removeCallAction(formData: FormData): Promise<void> {

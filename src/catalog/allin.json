@@ -1,0 +1,357 @@
+{
+  "institution": {
+    "id": "duoc",
+    "name": "Duoc UC",
+    "officialUrl": "https://www.duoc.cl/"
+  },
+  "instrument": {
+    "id": "duoc-allin",
+    "institutionId": "duoc",
+    "name": "All In Chile",
+    "description": "Torneo de innovación y emprendimiento para estudiantes y titulados de Duoc UC."
+  },
+  "sources": [
+    {
+      "id": "duoc-allin-2026-page",
+      "institutionId": "duoc",
+      "title": "All In Chile 2026 · Duoc UC",
+      "officialUrl": "https://www.duoc.cl/allinchile2026/",
+      "sourceType": "official_page",
+      "scope": "Convocatoria, inscripción y calendario del torneo 2026",
+      "reviewedAt": "2026-09-07",
+      "status": "current"
+    },
+    {
+      "id": "duoc-allin-2026-bases",
+      "institutionId": "duoc",
+      "title": "Bases All In Chile 2026 · versión 2",
+      "officialUrl": "https://www.duoc.cl/wp-content/uploads/2026/08/bases-allin-2026-v2.pdf",
+      "sourceType": "bases",
+      "scope": "Participación, entregables, evaluación, fechas y premios; secciones 3–6",
+      "reviewedAt": "2026-09-07",
+      "status": "current"
+    }
+  ],
+  "call": {
+    "id": "duoc-allin-chile-2026",
+    "instrumentId": "duoc-allin",
+    "name": "All In Chile 2026 · Duoc UC",
+    "institutionId": "duoc",
+    "territory": "Estudiantes y titulados de Duoc UC · Chile. Final presencial en Santiago.",
+    "timezone": "America/Santiago",
+    "opensAt": "2026-09-01",
+    "closesAt": "2026-09-27T23:59:00-03:00",
+    "schedulePrecision": "datetime",
+    "status": "open",
+    "isReference": false,
+    "scheduleMode": "window",
+    "eligibilityCoverage": "partial",
+    "supportType": "innovation_tournament",
+    "benefit": {
+      "summary": "Formación y mentorías. Cuatro premios principales de $1.100.000 por equipo, mención Santander de $600.000 y reconocimientos de $100.000 para diez equipos finalistas. Ganadores reciben una beca de preincubación de tres meses para el primer semestre de 2027. Los premios dependen del resultado del torneo.",
+      "maximumAmountClp": 1100000,
+      "coveragePercent": null,
+      "beneficiaryContributionPercent": null,
+      "taxTreatment": null,
+      "allowedCosts": [],
+      "excludedCosts": [
+        "Traslado y estadía para la final en Santiago."
+      ]
+    },
+    "requirements": [
+      {
+        "id": "profile",
+        "label": "Confirma quién representará al equipo",
+        "description": "El titular debe ser estudiante regular matriculado de Duoc UC o titulado de una carrera técnica o profesional de Duoc UC. Los demás integrantes pueden ser externos.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "team",
+        "label": "Revisa el tamaño del equipo",
+        "description": "Se requieren entre 2 y 5 integrantes, incluyendo al titular. Acuerden quién representa al equipo; aquí no ingreses RUT, nombres completos ni correos de terceros.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "conditions",
+        "label": "Revisa las condiciones de participación",
+        "description": "Revisa autoría original, exclusiones y que no sea el mismo proyecto ganador de una versión anterior. No pueden participar evaluadores, moderadores, colaboradores administrativos ni docentes con contrato vigente a septiembre de 2026. Se exige al menos 85% de participación formativa; Bootcamp tiene exigencia específica de asistencia completa. Lee las bases antes de registrar al equipo.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "intro-problem",
+        "label": "Explica el problema inicial",
+        "description": "Describe qué problema u oportunidad observaste, a quién afecta y en qué situación ocurre. No necesitas un proyecto terminado.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "intro-solution",
+        "label": "Cuenta tu idea de solución",
+        "description": "Explica qué quieren crear y cómo ayudaría a resolver el problema. Una herramienta digital es un medio, no el problema que buscas resolver.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "intro-sector",
+        "label": "Ubica el sector de tu proyecto",
+        "description": "Indica el sector o industria donde se usaría tu solución. Estudiar informática no obliga a que el problema pertenezca a la industria tecnológica.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "intro-motivation",
+        "label": "Relaciona la idea con tu equipo",
+        "description": "Explica por qué les interesa resolverlo y cómo se conecta con su formación, experiencia o especialidad.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "receipt",
+        "label": "Registra la recepción de tu inscripción",
+        "description": "Solo el titular registra al equipo en Santander X desde el sitio oficial. Estudiantes usan su RUT propio y correo institucional; titulados pueden usar correo institucional o personal. Completa todos los campos, envía y comprueba el correo de recepción. No ingreses credenciales ni datos personales del equipo en este asistente. Las bases y la página difieren en el tratamiento de duplicados: presenta una sola inscripción y consulta a Ruta IE si necesitas corregirla.",
+        "stage": "application",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Inscripción hasta el 27 de septiembre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "admission",
+        "label": "Revisa tu habilitación para el Encargo 1",
+        "description": "Después de la revisión de admisibilidad, consulta Santander X y el correo del titular. La institución habilita la entrega; completar tareas aquí no te declara admisible. Puedes adelantar borradores mientras esperas.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "assignment-problem",
+        "label": "Desarrolla el problema y su impacto",
+        "description": "Explica el problema u oportunidad, su impacto en el sector y su relación con el desafío. Incluye antecedentes o fuentes pertinentes. Mínimo oficial: 680 caracteres.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "assignment-solution",
+        "label": "Explica la solución y sus beneficios",
+        "description": "Describe cómo resuelves el problema, a quién impacta directamente y qué beneficios entrega a usuarios o clientes. Mínimo oficial: 550 caracteres.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "assignment-innovation",
+        "label": "Justifica qué hace diferente tu solución",
+        "description": "Compara con alternativas existentes y explica por qué tu propuesta puede destacar. Una aplicación o usar IA, por sí solos, no justifican innovación. Mínimo oficial: 680 caracteres.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "assignment-motivation",
+        "label": "Fundamenta la motivación y capacidades del equipo",
+        "description": "Relaciona la motivación con la formación, intereses y experiencia de las personas del equipo. Mínimo oficial: 550 caracteres.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "assignment-delivery",
+        "label": "Registra la entrega del Encargo 1",
+        "description": "Revisa las cuatro respuestas y la habilitación oficial. Entrega en Santander X con la cuenta del titular antes del 11 de octubre de 2026 a las 23:59. Registra aquí solo si comprobaste que la entrega quedó registrada en la plataforma.",
+        "stage": "evaluation",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "applicant",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Encargo 1 hasta el 11 de octubre de 2026, 23:59",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "courses",
+        "label": "Aprueba los cursos I y II",
+        "description": "Todos los equipos inscritos tienen acceso al programa formativo. Si clasificas al Bootcamp, debes aprobar ambos cursos antes de la jornada.",
+        "stage": "selection",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "selected_beneficiary",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Según clasificación y calendario oficial",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "bootcamp",
+        "label": "Prepara el Encargo 2 y asiste al Bootcamp",
+        "description": "Para hasta 100 equipos seleccionados: confirma continuidad en el plazo del correo, prepara la presentación del Encargo 2 y participa el 24 de octubre, de 09:00 a 14:00. Se exige asistencia al 100% de la jornada. Ante impedimento excepcional y justificado del titular, puede representar al equipo otro integrante previamente inscrito. Sin integrante presente, el equipo queda fuera.",
+        "stage": "selection",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "selected_beneficiary",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Según clasificación y calendario oficial",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "semifinal",
+        "label": "Participa en la formación y el Demo Day Midterm",
+        "description": "Para los 30 semifinalistas: formación online el 29 de octubre, de 17:00 a 19:00. Demo Day online el 5 de noviembre, en horario asignado entre 09:00 y 19:00, con hasta 4 minutos de pitch y 2 de preguntas. Se seleccionan 15 finalistas.",
+        "stage": "selection",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "selected_beneficiary",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Según clasificación y calendario oficial",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      },
+      {
+        "id": "final",
+        "label": "Prepara el pitch de la final",
+        "description": "Para los 15 finalistas: el titular debe asistir presencialmente el 13 de noviembre a Casa Central de Duoc UC en Santiago. Pitch de hasta 4 minutos con PPT: problema, mercado, solución, usuarios, propuesta de valor y llamado a la acción. Traslado y estadía son responsabilidad del equipo.",
+        "stage": "selection",
+        "kind": "specific_document",
+        "antecedentKeys": [],
+        "responsibleParty": "selected_beneficiary",
+        "verifier": "Duoc UC · bases All In Chile 2026, secciones 3 a 5",
+        "validity": "Según clasificación y calendario oficial",
+        "sourceIds": [
+          "duoc-allin-2026-bases"
+        ]
+      }
+    ],
+    "rules": [],
+    "sourceIds": [
+      "duoc-allin-2026-page",
+      "duoc-allin-2026-bases"
+    ],
+    "discovery": {
+      "national": true,
+      "regions": [],
+      "stages": [
+        "idea",
+        "prototype"
+      ],
+      "goals": [
+        "start",
+        "validate"
+      ],
+      "purpose": "Transforma una idea de tu especialidad en una propuesta innovadora. Torneo con formación, mentorías y premios para equipos liderados por estudiantes o titulados de Duoc UC; no necesitas un producto terminado.",
+      "conditions": [
+        "Titular estudiante regular matriculado o titulado de Duoc UC.",
+        "Equipo de 2 a 5 integrantes; los demás pueden ser externos.",
+        "Idea original y revisión de las exclusiones de participación.",
+        "Participación formativa mínima de 85%, con exigencias específicas en Bootcamp y final.",
+        "Inscripción por el titular en Santander X y correo de recepción confirmado."
+      ],
+      "contribution": "Tiempo y participación en las actividades. Si llegas a la final, el titular debe asistir a Santiago; el equipo cubre traslado y estadía. No se presenta como un subsidio ni se garantiza premio.",
+      "nextStep": "Revisa tu equipo y prepara la idea inicial. Luego inscríbete en Santander X desde el sitio oficial, antes del 27 de septiembre a las 23:59."
+    },
+    "editorial": {
+      "state": "published",
+      "owner": "Impulsa Proyectos · revisión asistida",
+      "reviewedAt": "2026-09-07",
+      "nextReviewAt": "2026-09-14",
+      "version": "2026-09-07.allin.1",
+      "evidenceNote": "Página oficial y bases v2 aportadas por el usuario. Diferencias de criterio sobre duplicados entre página y bases: consultar Ruta IE, sin resolución automática. Recorrido piloto limitado a participación, inscripción y Encargo 1; etapas posteriores solo informativas.",
+      "history": [
+        {
+          "date": "2026-09-07",
+          "change": "Incorporación del torneo y su recorrido piloto estudiantil."
+        }
+      ]
+    }
+  }
+}

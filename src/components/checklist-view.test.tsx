@@ -4,12 +4,23 @@ import catalog from "@/catalog/pilot.json";
 import { buildChecklist, buildChecklistByCall } from "@/domain/checklist";
 import type { FundingCall } from "@/domain/types";
 import { ChecklistView } from "./checklist-view";
+import { emptyAntecedent } from "@/domain/beginner-guide";
 
 const calls = catalog.calls as FundingCall[];
 const transversal = buildChecklist({ calls, progress: [] });
 const byCall = buildChecklistByCall({ calls, progress: [] });
 
 describe("ChecklistView", () => {
+  it("links answer-backed states to the actual answer instead of offering a conflicting second status", () => {
+    const input = { calls, progress: [], antecedents: [{
+      ...emptyAntecedent("project-1", "applicant.age"), value: 30, confirmationStatus: "confirmed" as const,
+    }] };
+    render(<ChecklistView action={vi.fn()} activeView="transversal" byCall={buildChecklistByCall(input)}
+      calls={calls} projectId="project-1" transversal={buildChecklist(input)} />);
+    expect(screen.queryByRole("combobox", { name: /Estado.*Edad/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Revisar respuesta: Edad" })).toHaveAttribute("href", "#antecedent-applicant.age");
+  });
+
   it("shows each call as the default view while preserving shared checklist keys", () => {
     render(
       <ChecklistView

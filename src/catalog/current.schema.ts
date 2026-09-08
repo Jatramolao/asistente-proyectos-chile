@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { PilotCatalogSchema } from "./pilot.schema";
 
-const officialHosts = ["sercotec.cl", "corfo.cl", "corfo.gob.cl", "fosis.gob.cl", "startupchile.org"];
+const officialHosts = ["sercotec.cl", "corfo.cl", "corfo.gob.cl", "fosis.gob.cl", "startupchile.org", "duoc.cl"];
 const officialUrl = z.string().url().refine(value => {
   const url = new URL(value);
   return url.protocol === "https:" && officialHosts.some(host => url.hostname === host || url.hostname.endsWith(`.${host}`));
@@ -39,6 +39,7 @@ export const CurrentCatalogSchema = PilotCatalogSchema.extend({
   version: z.string().min(1), reviewedAt: date, lastDiscoveryAt: date,
   discoveryScope: z.string().min(1),
   instruments: z.array(PilotCatalogSchema.shape.instruments.element),
+  institutions: z.array(PilotCatalogSchema.shape.institutions.element).min(3),
   sources: z.array(PilotCatalogSchema.shape.sources.element.extend({ officialUrl, reviewedAt: date })),
   calls: z.array(CallSchema).min(1),
 }).superRefine((catalog, ctx) => {

@@ -2,8 +2,28 @@ import { describe, expect, it } from "vitest";
 import catalog from "@/catalog/pilot.json";
 import type { FundingCall } from "./types";
 import { buildChecklist, buildChecklistByCall } from "./checklist";
+import { emptyAntecedent } from "./beginner-guide";
 
 describe("buildChecklist", () => {
+  it("derives applicant preparation from a confirmed answer in both views", () => {
+    const input = { calls: catalog.calls as FundingCall[], progress: [], antecedents: [{
+      ...emptyAntecedent("project-1", "applicant.age"), value: 30, confirmationStatus: "confirmed" as const,
+    }] };
+    const shared = buildChecklist(input).flatMap(group => group.items).find(item => item.key === "antecedent:applicant.age");
+    expect(shared?.status).toBe("user_completed_unvalidated");
+    const specific = buildChecklistByCall(input)[0].groups.flatMap(group => group.items).find(item => item.key === "antecedent:applicant.age");
+    expect(specific?.status).toBe("user_completed_unvalidated");
+  });
+
+  it("reopens a cleared or stale answer without erasing saved notes", () => {
+    const input = { calls: catalog.calls as FundingCall[], progress: [{
+      itemKey: "antecedent:applicant.age", status: "user_completed_unvalidated" as const,
+      note: "Conservar", reason: null, updatedAt: "2026-09-04",
+    }], antecedents: [emptyAntecedent("project-1", "applicant.age")] };
+    const item = buildChecklist(input).flatMap(group => group.items).find(item => item.key === "antecedent:applicant.age");
+    expect(item).toMatchObject({ status: "pending", note: "Conservar" });
+  });
+
   it("keeps FOSIS verification and validity in its own call", () => {
     const byCall = buildChecklistByCall({ calls: catalog.calls as FundingCall[], progress: [] });
     const age = byCall[2].groups.flatMap((group) => group.items)

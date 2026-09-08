@@ -35,7 +35,7 @@ export default function HomePage() {
 
         <div className="border-l-2 border-[var(--blue)] pl-6 lg:mb-2">
           <p className="max-w-xl text-lg leading-8 text-[var(--ink-muted)]">
-            Convierte una idea inicial en antecedentes reutilizables y descubre qué instrumentos públicos vale la pena revisar.
+            Convierte una idea inicial en antecedentes reutilizables y descubre qué apoyos públicos y estudiantiles vale la pena revisar.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link className="rounded-lg bg-[var(--navy)] px-5 py-3 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(20,48,79,0.18)] transition-[background-color,transform] duration-150 hover:bg-[#1c426b] active:scale-[0.97]" href="/registro">
@@ -73,7 +73,7 @@ export default function HomePage() {
       <section className="mx-auto grid max-w-7xl gap-6 px-5 py-12 md:grid-cols-[1fr_auto] md:items-center md:px-10">
         <div>
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--green)]">Catálogo para empezar: {catalog.calls.length} apoyos y referencias</p>
-          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Financiamiento, asesoría y cursos de Sercotec, Corfo y FOSIS. Revisa fechas, condiciones y fuentes antes de elegir.</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">Financiamiento, asesoría, cursos y torneos de Sercotec, Corfo, FOSIS y Duoc UC. Revisa fechas, condiciones y fuentes antes de elegir.</p>
         </div>
         <p className="max-w-lg rounded-lg border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-xs leading-5 text-[var(--ink-muted)]">
           Esta herramienta centraliza información oficial. No evalúa ni valida documentos y la institución convocante siempre prevalece.

@@ -9,6 +9,7 @@ type ChecklistViewProps = {
   calls: FundingCall[];
   projectId: string;
   transversal: ChecklistGroup[];
+  recordCallId?: string;
 };
 
 function responsibleLabel(item: Pick<ChecklistItem, "responsibleParty">): string {
@@ -69,7 +70,14 @@ function ChecklistItemRow({
         ) : null}
       </div>
 
-      <form action={action} className="space-y-3">
+      {item.responseStage ? <div className="space-y-3 text-sm leading-6 text-[var(--ink-muted)]">
+        <p>El estado depende de la respuesta guardada para esta entrega, no de una marca manual.</p>
+        <Link className="text-[var(--blue)] underline" href={`?call=${encodeURIComponent(item.callIds[0])}&stage=${item.responseStage}`}>Editar en su etapa: {item.label}</Link>
+      </div> : item.answerBacked ? <div className="space-y-3 text-sm leading-6 text-[var(--ink-muted)]">
+        <p>El estado se toma de tu respuesta guardada.</p>
+        <a className="font-semibold text-[var(--blue)] underline underline-offset-4" href={`#antecedent-${item.antecedentKeys[0]}`}>Revisar respuesta: {item.label}</a>
+        {item.note ? <p className="text-xs">Nota guardada: {item.note}</p> : null}
+      </div> : <form action={action} className="space-y-3">
         <input name="projectId" type="hidden" value={projectId} />
         <input name="itemKey" type="hidden" value={item.key} />
         <div className="grid grid-cols-[1fr_auto] gap-2">
@@ -112,7 +120,7 @@ function ChecklistItemRow({
             </div>
           </div>
         </details>
-      </form>
+      </form>}
     </article>
   );
 }
@@ -151,8 +159,9 @@ function StageGroups({
   );
 }
 
-export function ChecklistView({ action, activeView, byCall, calls, projectId, transversal }: ChecklistViewProps) {
+export function ChecklistView({ action, activeView, byCall, calls, projectId, transversal, recordCallId }: ChecklistViewProps) {
   const callsById = new Map(calls.map((call) => [call.id, call.name]));
+  const queryPrefix = recordCallId ? `?view=record&call=${encodeURIComponent(recordCallId)}&` : "?";
 
   return (
     <>
@@ -160,14 +169,14 @@ export function ChecklistView({ action, activeView, byCall, calls, projectId, tr
         <Link
           aria-current={activeView === "calls" ? "page" : undefined}
           className={`px-4 py-2 text-sm font-semibold transition-colors ${activeView === "calls" ? "bg-[var(--navy)] text-white" : "text-[var(--ink-muted)] hover:bg-white hover:text-[var(--navy)]"}`}
-          href="?checklist=convocatorias#checklist"
+          href={`${queryPrefix}checklist=convocatorias#checklist`}
         >
           Por convocatoria
         </Link>
         <Link
           aria-current={activeView === "transversal" ? "page" : undefined}
           className={`px-4 py-2 text-sm font-semibold transition-colors ${activeView === "transversal" ? "bg-[var(--navy)] text-white" : "text-[var(--ink-muted)] hover:bg-white hover:text-[var(--navy)]"}`}
-          href="?checklist=transversal#checklist"
+          href={`${queryPrefix}checklist=transversal#checklist`}
         >
           Vista transversal
         </Link>

@@ -2,9 +2,9 @@
 
 ## Fuente de verdad y alcance
 
-La app lee `src/catalog/current.json` y conserva las tres referencias de `src/catalog/pilot.json`. `loadCatalog()` une y valida los datos antes de utilizarlos. Las copias en `app_catalog_snapshot` son auditoría, no un segundo catálogo editable. Los IDs estables permiten conservar selecciones y avances entre versiones.
+La app lee `src/catalog/current.json`, incorpora All In desde `src/catalog/allin.json` y conserva las tres referencias de `src/catalog/pilot.json`. `loadCatalog()` une y valida los datos antes de utilizarlos. Las copias en `app_catalog_snapshot` son auditoría, no un segundo catálogo editable. Los IDs estables permiten conservar selecciones y avances entre versiones.
 
-La actualización del 2 de septiembre incorpora Modo Empleo Atacama, Centros de Negocios, Capacitación Sercotec y Build. Se consultó también el portal FOSIS: Semilla aparece cerrado; los eventuales cupos comunales no se presentan como una apertura nacional. La revisión fue asistida, sin revisión humana independiente ni sesiones de usabilidad con principiantes.
+La actualización del 2 de septiembre incorpora Modo Empleo Atacama, Centros de Negocios, Capacitación Sercotec y Build. Se consultó también el portal FOSIS: Semilla aparece cerrado; los eventuales cupos comunales no se presentan como una apertura nacional. El 7 de septiembre se incorporó All In Chile 2026 de Duoc UC desde su página oficial y las bases v2 aportadas por el usuario. La revisión fue asistida, sin revisión humana independiente ni sesiones de usabilidad con principiantes.
 
 ## Procedimiento editorial
 
@@ -22,11 +22,11 @@ La fecha de próxima revisión es inclusiva: al día siguiente, en hora de Chile
 
 Cadencia de trabajo propuesta: semanal para programas y servicios, diaria durante los siete días anteriores al cierre de un llamado, mensual para referencias históricas. La fecha se fija por ficha. No hay scraping, tarea programada, envío de alertas ni promesa de revisión automática.
 
-Al 2 de septiembre la comprobación puntual arroja un fondo abierto, dos servicios continuos, un programa anunciado y tres referencias cerradas. Esos contadores cambian al vencer plazos o revisiones.
+El catálogo contiene ocho fichas. La disponibilidad visible se calcula en cada solicitud y cambia al vencer plazos o fechas de revisión; por eso la documentación no fija un contador permanente de apoyos abiertos.
 
 ## Selecciones y preparación
 
-`app_project_call` vincula proyectos con apoyos. Todas las operaciones verifican la propiedad del proyecto; seleccionar es idempotente. Quitar un apoyo no borra antecedentes ni progreso de checklist. Al existir selecciones, la página concentra el checklist en ellas; sin selecciones permite explorar la cobertura completa.
+`app_project_call` vincula proyectos con apoyos. Todas las operaciones verifican la propiedad del proyecto; seleccionar es idempotente. Quitar un apoyo no borra antecedentes ni progreso de checklist. Al existir selecciones, la página concentra el checklist en ellas; sin selecciones muestra un estado vacío y permite explorar el catálogo sin generar tareas de preparación.
 
 Las reglas automáticas cubren solo algunas condiciones: todas las fichas actuales declaran cobertura parcial. No se concluye admisibilidad aunque las respuestas conocidas sean favorables; las demás condiciones se revisan en la ficha y sus fuentes.
 

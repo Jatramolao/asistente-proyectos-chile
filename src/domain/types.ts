@@ -101,6 +101,7 @@ export type OfficialSource = {
 };
 
 export type SupportType =
+  | "innovation_tournament"
   | "non_refundable_subsidy"
   | "cofinanced_subsidy"
   | "credit"
@@ -208,6 +209,8 @@ export type ChecklistStatus =
   | "stale";
 
 export type ChecklistItem = {
+  answerBacked?: boolean;
+  responseStage?: string;
   key: string;
   label: string;
   status: ChecklistStatus;

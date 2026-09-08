@@ -6,9 +6,14 @@ import { loadCatalog, publishCurrentCatalog } from "@/server/services/catalog";
 import { CurrentCatalogSchema } from "./current.schema";
 
 describe("current editorial catalogue", () => {
+  it("adds Duoc with the exact close and a per-team prize rather than the prize pool", () => {
+    const catalog = loadCatalog();
+    expect(catalog.calls.find(call => call.id === "duoc-allin-chile-2026")).toMatchObject({ institutionId: "duoc", supportType: "innovation_tournament", closesAt: "2026-09-27T23:59:00-03:00", benefit: { maximumAmountClp: 1100000 } });
+    expect(catalog.institutions.some(institution => institution.id === "duoc")).toBe(true);
+  });
   it("includes reviewed additions and preserves historical review dates", () => {
     const catalog = loadCatalog();
-    expect(catalog.calls).toHaveLength(7);
+    expect(catalog.calls).toHaveLength(8);
     expect(catalog.calls.filter(c => c.isReference)).toHaveLength(3);
     expect(catalog.calls.filter(c => c.isReference).every(c => c.editorial.reviewedAt === "2026-09-01")).toBe(true);
   });

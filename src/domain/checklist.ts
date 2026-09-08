@@ -1,5 +1,7 @@
 import { getAntecedentDefinition } from "./antecedents";
-import type { ChecklistItem, ChecklistStatus, FundingCall, RequirementStage } from "./types";
+import { hasConfirmedValue } from "./antecedent-input";
+import { getCallResponse, responseStatus } from "./call-responses";
+import type { ChecklistItem, ChecklistStatus, FundingCall, ProjectAntecedent, RequirementStage } from "./types";
 
 export type ChecklistProgress = {
   itemKey: string;
@@ -53,6 +55,7 @@ function unique<T>(values: readonly T[]): T[] {
 export function buildChecklist(input: {
   calls: readonly FundingCall[];
   progress: readonly ChecklistProgress[];
+  antecedents?: readonly ProjectAntecedent[];
 }): ChecklistGroup[] {
   const items = new Map<string, ChecklistItem>();
 
@@ -124,6 +127,23 @@ export function buildChecklist(input: {
     item.reason = progress.reason;
   }
 
+  for (const item of items.values()) {
+    const response = getCallResponse(item.key);
+    if (!response) continue;
+    item.responseStage = response.stage;
+    item.status = item.status === "stale" ? "stale" : responseStatus(response, item.note ?? "");
+    item.statusLabel = STATUS_LABELS[item.status];
+  }
+
+  for (const antecedent of input.antecedents ?? []) {
+    const item = items.get(`antecedent:${antecedent.key}`);
+    if (!item || item.contexts.some(context => context.responsibleParty !== "applicant") || item.status === "not_applicable") continue;
+    item.answerBacked = true;
+    item.status = hasConfirmedValue(antecedent) ? "user_completed_unvalidated"
+      : antecedent.confirmationStatus === "stale" ? "stale" : "pending";
+    item.statusLabel = STATUS_LABELS[item.status];
+  }
+
   return (Object.keys(STAGE_LABELS) as RequirementStage[])
     .map((stage) => ({
       stage,
@@ -136,6 +156,7 @@ export function buildChecklist(input: {
 export function buildChecklistByCall(input: {
   calls: readonly FundingCall[];
   progress: readonly ChecklistProgress[];
+  antecedents?: readonly ProjectAntecedent[];
 }): CallChecklistGroup[] {
   const transversal = buildChecklist(input);
   const sharedCallIds = new Map(transversal.flatMap((group) => group.items).map((item) => [item.key, item.callIds]));
@@ -145,7 +166,7 @@ export function buildChecklistByCall(input: {
     callName: call.name,
     institutionId: call.institutionId,
     territory: call.territory,
-    groups: buildChecklist({ calls: [call], progress: input.progress })
+    groups: buildChecklist({ ...input, calls: [call] })
       .map((group) => ({
         ...group,
         items: group.items.map((item) => ({ ...item, callIds: sharedCallIds.get(item.key) ?? [call.id] })),

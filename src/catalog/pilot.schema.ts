@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const InstitutionIdSchema = z.enum(["sercotec", "corfo", "fosis"]);
+const InstitutionIdSchema = z.enum(["sercotec", "corfo", "fosis", "duoc"]);
 const AntecedentKeySchema = z.enum([
   "essence.problem",
   "essence.evidence",
@@ -136,6 +136,7 @@ const CallSchema = z
       "tax_incentive",
       "training",
       "technical_assistance",
+      "innovation_tournament",
     ]),
     benefit: BenefitSchema,
     requirements: z.array(RequirementSchema).min(1),
