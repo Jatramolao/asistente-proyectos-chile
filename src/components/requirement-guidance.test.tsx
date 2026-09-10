@@ -116,4 +116,19 @@ describe("RequirementGuidance", () => {
     expect(onOpen).not.toHaveBeenCalled();
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
+
+  it("cycles keyboard focus inside the open dialog", async () => {
+    render(<GuidanceHarness />);
+    fireEvent.click(screen.getByRole("button", { name: /Ver orientación/ }));
+    const dialog = screen.getByRole("dialog");
+    const first = screen.getByRole("button", { name: "Cerrar orientación" });
+    const last = screen.getByRole("button", { name: "Volver a mi respuesta" });
+    await waitFor(() => expect(screen.getByRole("heading", { name: guidance.title })).toHaveFocus());
+
+    last.focus();
+    fireEvent.keyDown(dialog, { key: "Tab" });
+    expect(first).toHaveFocus();
+    fireEvent.keyDown(dialog, { key: "Tab", shiftKey: true });
+    expect(last).toHaveFocus();
+  });
 });

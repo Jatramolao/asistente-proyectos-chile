@@ -113,10 +113,34 @@ export function RequirementGuidance({
     restoreFocus();
   }
 
+  function keepFocusInside(event: React.KeyboardEvent<HTMLDialogElement>) {
+    if (event.key !== "Tab") return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    const controls = Array.from(dialog.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+    )).filter(control => {
+      const closedDetails = control.closest("details:not([open])");
+      return getComputedStyle(control).display !== "none"
+        && (!closedDetails || control.tagName === "SUMMARY");
+    });
+    const first = controls.at(0);
+    const last = controls.at(-1);
+    if (!first || !last) return;
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === titleRef.current)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   return <>
     <button
       ref={triggerRef}
       type="button"
+      aria-label={`Ver orientación: ${guidance.title}`}
       aria-haspopup="dialog"
       aria-expanded={open}
       aria-controls={dialogId}
@@ -125,7 +149,7 @@ export function RequirementGuidance({
       className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-md border border-[#b7d2e4] bg-white px-3 py-2 text-sm font-semibold text-[var(--blue)] hover:border-[var(--blue)] disabled:cursor-not-allowed disabled:opacity-60"
     >
       <Lightbulb aria-hidden size={18} />
-      Ver orientación<span className="sr-only">: {guidance.title}</span>
+      Ver orientación
     </button>
 
     <dialog
@@ -138,6 +162,7 @@ export function RequirementGuidance({
       onClose={handleNativeClose}
       onCancel={event => { event.preventDefault(); closeDialog(); }}
       onClick={event => { if (event.target === event.currentTarget) closeDialog(); }}
+      onKeyDown={keepFocusInside}
     >
       <div className="flex h-full min-h-0 flex-col overflow-hidden bg-[var(--surface)]" onClick={event => event.stopPropagation()}>
         <header className="flex shrink-0 items-start gap-4 border-b border-[var(--line)] px-5 py-4 md:px-7">
