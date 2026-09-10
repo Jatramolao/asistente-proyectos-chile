@@ -72,7 +72,6 @@ export function RequirementGuidance({
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (open) {
-      setExpanded(false);
       if (detailsRef.current) detailsRef.current.open = false;
       if (bodyRef.current) bodyRef.current.scrollTop = 0;
       if (!dialog.open) {
@@ -89,6 +88,13 @@ export function RequirementGuidance({
 
   function restoreFocus() {
     requestAnimationFrame(() => triggerRef.current?.focus());
+  }
+
+  function openDialog() {
+    setExpanded(false);
+    if (detailsRef.current) detailsRef.current.open = false;
+    if (bodyRef.current) bodyRef.current.scrollTop = 0;
+    onOpen();
   }
 
   function closeDialog() {
@@ -115,7 +121,7 @@ export function RequirementGuidance({
       aria-expanded={open}
       aria-controls={dialogId}
       disabled={disabled}
-      onClick={onOpen}
+      onClick={openDialog}
       className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-md border border-[#b7d2e4] bg-white px-3 py-2 text-sm font-semibold text-[var(--blue)] hover:border-[var(--blue)] disabled:cursor-not-allowed disabled:opacity-60"
     >
       <Lightbulb aria-hidden size={18} />

@@ -10,6 +10,7 @@ import { buildChecklist, buildChecklistByCall } from "@/domain/checklist";
 import { AVAILABILITY_LABELS, benefitLabel, formatCatalogDate, getAvailability, reviewIsDue } from "@/domain/catalog";
 import { evaluateRule, matchCall } from "@/domain/match";
 import { buildPreparationJourney } from "@/domain/preparation-journey";
+import { buildRequirementGuidanceMap } from "@/domain/requirement-guidance";
 import { PreparationJourney } from "@/components/preparation-journey";
 import type { FundingCall, MatchStatus } from "@/domain/types";
 import { ProjectGuide } from "@/components/project-guide";
@@ -65,6 +66,12 @@ export default async function ProjectPage({
   const currentCalls = results.filter(({ call }) => getAvailability(call, now) === "open").length;
   const serviceCount = results.filter(({ call }) => getAvailability(call, now) === "ongoing").length;
   const journey = focusedCall ? buildPreparationJourney({ call: focusedCall as FundingCall, antecedents, progress: checklistInput.progress }) : null;
+  const guidanceByRequirementId = focusedCall ? buildRequirementGuidanceMap({
+    callId: focusedCall.id,
+    editorialVersion: focusedCall.editorial.version,
+    requirements: focusedCall.requirements,
+    sources: catalog.sources,
+  }) : {};
 
   if (focusedCall && journey && query.view !== "record" && !query.checklist) {
     const availability = getAvailability(focusedCall, now);
@@ -75,6 +82,7 @@ export default async function ProjectPage({
       <div className="mx-auto max-w-7xl px-5 py-8 md:px-10 md:py-10">
         <PreparationJourney key={`${projectId}-${focusedCall.id}`} projectId={projectId} projectName={project.name}
           call={focusedCall} stages={journey} warnings={warnings}
+          guidanceByRequirementId={guidanceByRequirementId}
           availabilityLabel={`${AVAILABILITY_LABELS[availability]}${focusedCall.closesAt ? ` · Cierre: ${formatCatalogDate(focusedCall.closesAt)}` : ""}`}
           antecedentAction={confirmAntecedentAction} checklistAction={updateChecklistItemAction} responseAction={saveCallResponseAction} initialStage={typeof query.stage === "string" ? query.stage : undefined} />
       </div>
