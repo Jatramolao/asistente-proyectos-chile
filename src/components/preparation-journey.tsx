@@ -5,15 +5,19 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import { Check, ChevronDown, ArrowRight, Info, CircleAlert } from "lucide-react";
 import type { FundingCall } from "@/domain/types";
 import type { PreparationStage } from "@/domain/preparation-journey";
+import type { RequirementGuidanceMap } from "@/domain/requirement-guidance";
 import { PreparationTaskEditor, type PreparationAction } from "./preparation-task";
 import { CallResponseEditor } from "./call-response-editor";
+import { RequirementGuidance } from "./requirement-guidance";
+
+const EMPTY_GUIDANCE: RequirementGuidanceMap = {};
 
 function subscribeToStorage(notify: () => void) {
   window.addEventListener("storage", notify);
   return () => window.removeEventListener("storage", notify);
 }
 
-export function PreparationJourney({ projectId, projectName, call, stages, availabilityLabel, warnings, antecedentAction, checklistAction, responseAction, initialStage }: {
+export function PreparationJourney({ projectId, projectName, call, stages, availabilityLabel, warnings, antecedentAction, checklistAction, responseAction, initialStage, guidanceByRequirementId = EMPTY_GUIDANCE }: {
   projectId: string;
   projectName: string;
   call: Pick<FundingCall, "id" | "name" | "benefit">;
@@ -24,6 +28,7 @@ export function PreparationJourney({ projectId, projectName, call, stages, avail
   checklistAction: PreparationAction;
   responseAction?: PreparationAction;
   initialStage?: string;
+  guidanceByRequirementId?: RequirementGuidanceMap;
 }) {
   const storageKey = `impulsa:journey:v1:${projectId}:${call.id}`;
   const readStage = useCallback(() => {
@@ -34,6 +39,7 @@ export function PreparationJourney({ projectId, projectName, call, stages, avail
   const [expandedTask, setExpandedTask] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [activeGuidanceId, setActiveGuidanceId] = useState<string | null>(null);
   const dirty = useRef(false);
   const stageHeading = useRef<HTMLHeadingElement>(null);
   const defaultStage = stages.find(stage => !stage.future && stage.completed < stage.tasks.length) ?? stages.filter(stage => !stage.future).at(-1)!;
@@ -66,6 +72,7 @@ export function PreparationJourney({ projectId, projectName, call, stages, avail
   function changeStage(stageId: string) {
     if (!mayLeave()) return;
     dirty.current = false;
+    setActiveGuidanceId(null);
     rememberStage(stageId);
     setExpandedTask(null);
     setSaved(false);
@@ -135,12 +142,14 @@ export function PreparationJourney({ projectId, projectName, call, stages, avail
           {activeStage.tasks.map(task => {
             if (activeStage.previewOnly) return <article key={task.id} className="border-t border-[var(--line)] p-5 first:border-t-0"><h3 className="font-semibold">{task.label}</h3><p className="mt-2 text-sm leading-6 text-[var(--ink-muted)]">{task.help}</p></article>;
             const expanded = task.id === activeTaskId;
+            const guidance = task.requirementIds.map(requirementId => guidanceByRequirementId[requirementId]).find(Boolean);
             const panelId = `task-panel-${task.id.replace(/[^a-zA-Z0-9-]/g, "-")}`;
             return <article key={task.id} className={`border-t border-[var(--line)] first:border-t-0 ${expanded ? "bg-[#f0f6fa]" : "bg-[var(--surface)]"}`}>
               <h3>
                 <button type="button" aria-expanded={expanded} aria-controls={panelId} disabled={saving} onClick={() => {
                   if (!mayLeave()) return;
                   dirty.current = false;
+                  setActiveGuidanceId(null);
                   setExpandedTask(expanded ? "" : task.id);
                   setSaved(false);
                 }} className="flex w-full items-center gap-3 px-4 py-5 text-left md:gap-4 md:px-6">
@@ -156,7 +165,19 @@ export function PreparationJourney({ projectId, projectName, call, stages, avail
               </h3>
               <div id={panelId} hidden={!expanded}>
                 {expanded ? <div className="px-4 pb-6 md:pl-16 md:pr-6">
-                  <p className="text-sm leading-6 text-[var(--ink-muted)]">{task.help}</p>
+                  {guidance ? <>
+                    <p className="text-sm leading-6 text-[var(--ink-muted)]">{guidance.instruction}</p>
+                    {guidance.essentialConditions.length ? <ul className="mt-3 list-disc space-y-1 pl-5 text-sm leading-6 text-[var(--ink-muted)]">
+                      {guidance.essentialConditions.map(condition => <li key={condition}>{condition}</li>)}
+                    </ul> : null}
+                    <RequirementGuidance
+                      guidance={guidance}
+                      open={activeGuidanceId === guidance.requirementId}
+                      disabled={saving}
+                      onOpen={() => setActiveGuidanceId(guidance.requirementId)}
+                      onClose={() => setActiveGuidanceId(null)}
+                    />
+                  </> : <p className="text-sm leading-6 text-[var(--ink-muted)]">{task.help}</p>}
                   {task.response && responseAction ? <CallResponseEditor key={task.id} task={task} projectId={projectId} action={responseAction}
                     onDirty={() => { dirty.current = true; }} onSaving={setSaving} onSaved={ready => {
                       dirty.current = false;

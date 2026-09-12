@@ -1,8 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import catalog from "@/catalog/current.json";
+import allIn from "@/catalog/allin.json";
 import { buildPreparationJourney } from "@/domain/preparation-journey";
-import type { FundingCall } from "@/domain/types";
+import { buildRequirementGuidanceMap } from "@/domain/requirement-guidance";
+import type { FundingCall, OfficialSource, Requirement } from "@/domain/types";
 import { PreparationJourney } from "./preparation-journey";
 
 const call = catalog.calls[0] as FundingCall;
@@ -11,6 +13,23 @@ const props = {
   projectId: "project-1", projectName: "Taller textil circular", call, stages,
   availabilityLabel: "Consultar disponibilidad", warnings: [],
   antecedentAction: vi.fn(async () => {}), checklistAction: vi.fn(async () => {}),
+};
+
+const allInCall = allIn.call as FundingCall;
+const allInStages = buildPreparationJourney({ call: allInCall, antecedents: [], progress: [] })!;
+const guidanceByRequirementId = buildRequirementGuidanceMap({
+  callId: allIn.call.id,
+  editorialVersion: allIn.call.editorial.version,
+  requirements: allIn.call.requirements as Requirement[],
+  sources: allIn.sources as OfficialSource[],
+});
+const allInProps = {
+  ...props,
+  call: allInCall,
+  stages: allInStages,
+  responseAction: vi.fn(async () => {}),
+  initialStage: "registration",
+  guidanceByRequirementId,
 };
 
 beforeEach(() => { localStorage.clear(); vi.clearAllMocks(); });
@@ -78,5 +97,50 @@ describe("PreparationJourney", () => {
     const event = new Event("beforeunload", { cancelable: true });
     window.dispatchEvent(event);
     expect(event.defaultPrevented).toBe(true);
+  });
+
+  it("keeps an unsaved All In draft while contextual guidance opens and closes", async () => {
+    render(<PreparationJourney {...allInProps} />);
+    const editor = screen.getByRole("textbox", { name: "Tu respuesta" });
+    fireEvent.change(editor, { target: { value: "Borrador sin guardar" } });
+
+    fireEvent.click(screen.getByRole("button", { name: "Ver orientación: Explica el problema inicial" }));
+    expect(screen.getByRole("dialog", { name: "Explica el problema inicial" })).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: "Volver a mi respuesta" }));
+
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    expect(editor).toHaveValue("Borrador sin guardar");
+    expect(allInProps.responseAction).not.toHaveBeenCalled();
+  });
+
+  it("shows guidance only for the three reviewed All In requirements", () => {
+    render(<PreparationJourney {...allInProps} initialStage="participation" />);
+    expect(screen.getByText(/Indica si serás titular como estudiante regular/)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Ver orientación: Confirma quién representará al equipo" })).toBeVisible();
+
+    fireEvent.click(screen.getByRole("button", { name: /Idea e inscripción/ }));
+    expect(screen.getByRole("button", { name: "Ver orientación: Explica el problema inicial" })).toBeVisible();
+    fireEvent.click(screen.getByRole("button", { name: /Cuenta tu idea de solución/ }));
+    expect(screen.getByText("Explica qué quieren crear y cómo ayudaría a resolver el problema. Una herramienta digital es un medio, no el problema que buscas resolver.")).toBeVisible();
+    expect(screen.queryByRole("button", { name: /Ver orientación/ })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Registra la recepción de tu inscripción/ }));
+    expect(screen.getByText("La inscripción se realiza en el sitio oficial; guardar aquí no la envía.")).toBeVisible();
+    expect(screen.getByRole("button", { name: "Ver orientación: Registra la recepción de tu inscripción" })).toBeVisible();
+  });
+
+  it("keeps a save error visible after consulting guidance", async () => {
+    const responseAction = vi.fn(async () => { throw new Error("offline"); });
+    render(<PreparationJourney {...allInProps} responseAction={responseAction} />);
+    const editor = screen.getByRole("textbox", { name: "Tu respuesta" });
+    fireEvent.change(editor, { target: { value: "Problema de prueba" } });
+    fireEvent.submit(editor.closest("form")!);
+    await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("No pudimos guardar"));
+
+    fireEvent.click(screen.getByRole("button", { name: /Ver orientación/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Volver a mi respuesta" }));
+
+    await waitFor(() => expect(screen.getByRole("alert")).toBeVisible());
+    expect(editor).toHaveValue("Problema de prueba");
   });
 });

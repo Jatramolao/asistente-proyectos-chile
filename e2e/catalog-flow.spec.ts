@@ -38,7 +38,7 @@ test("explores public evidence and carries a selected support through registrati
 
   await page.goto("/catalogo/corfo-build-programa");
   await expect(page.getByText("Sin fecha publicada", { exact: true })).toHaveCount(2);
-  await page.getByRole("link", { name: "Preparar mi idea para este programa" }).click();
+  await page.locator('a[href="/catalogo/corfo-build-programa/preparar"]').click();
   await page.getByRole("button", { name: "Guardar apoyo en este proyecto" }).click();
   await expect(page.getByText("Preparando 2 apoyos elegidos", { exact: true })).toBeVisible();
   await page.locator("#oportunidades article").filter({ has: page.getByRole("heading", { name: "Build · Start-Up Chile", exact: true }) }).getByRole("button", { name: "Quitar de mi preparación" }).click();
