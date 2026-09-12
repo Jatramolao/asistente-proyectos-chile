@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Estado ejecutivo del Asistente de Proyectos Chile al 12 de septiembre de 2026.">
+  <title>Estado ejecutivo · Asistente de Proyectos Chile</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --canvas: #f4f2ec;
+      --surface: #fffdf8;
+      --surface-strong: #ffffff;
+      --ink: #142132;
+      --ink-muted: #5d6875;
+      --navy: #14304f;
+      --blue: #1769aa;
+      --blue-soft: #dceefa;
+      --green: #16715a;
+      --green-soft: #def2ea;
+      --amber: #9b6215;
+      --amber-soft: #fff0ce;
+      --red: #a33c35;
+      --red-soft: #fbe5e2;
+      --line: #d9ddd9;
+      --line-strong: #bdc6c6;
+      --focus: #ffbf47;
+      --shadow: 0 18px 50px rgba(20, 48, 79, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      scroll-behavior: smooth;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        linear-gradient(rgba(20, 48, 79, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 48, 79, 0.035) 1px, transparent 1px),
+        var(--canvas);
+      background-size: 32px 32px;
+    }
+
+    a, button { font: inherit; }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -5rem;
+      left: 1rem;
+      z-index: 10;
+      border-radius: 0.5rem;
+      background: var(--ink);
+      color: #fff;
+      padding: 0.75rem 1rem;
+    }
+
+    .skip-link:focus { top: 1rem; }
+
+    .shell {
+      width: min(1180px, calc(100% - 2rem));
+      margin: 0 auto;
+      padding: 2rem 0 4rem;
+    }
+
+    .topbar,
+    .hero-heading,
+    .section-heading,
+    .split,
+    .delivery-head,
+    .action-row,
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .topbar {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 750;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 2.25rem;
+      height: 2.25rem;
+      place-items: center;
+      border-radius: 0.65rem;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 2.65rem;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 0.65rem;
+      background: var(--surface);
+      color: var(--navy);
+      cursor: pointer;
+      padding: 0.65rem 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .button:hover { border-color: var(--blue); }
+
+    .eyebrow,
+    .micro,
+    .metric-label,
+    .status-label,
+    .priority,
+    .legend-label {
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow,
+    .micro,
+    .metric-label,
+    .legend-label { color: var(--ink-muted); }
+
+    .hero {
+      padding: clamp(1.5rem, 4vw, 3.25rem);
+      border: 1px solid var(--line);
+      border-radius: 1.25rem;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-heading { align-items: flex-start; }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 16ch;
+      margin-bottom: 1rem;
+      color: var(--navy);
+      font-size: clamp(2.2rem, 6vw, 4.8rem);
+      line-height: 0.96;
+      letter-spacing: -0.055em;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      color: var(--navy);
+      font-size: clamp(1.45rem, 3vw, 2rem);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin-bottom: 0.5rem;
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+    p { line-height: 1.6; }
+
+    .hero-copy {
+      max-width: 63ch;
+      margin-bottom: 0;
+      color: var(--ink-muted);
+      font-size: 1.05rem;
+    }
+
+    .health {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 0.55rem;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      padding: 0.55rem 0.8rem;
+      font-size: 0.85rem;
+      font-weight: 750;
+    }
+
+    .health::before {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+      box-shadow: 0 0 0 0.28rem rgba(22, 113, 90, 0.13);
+    }
+
+    .snapshot {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .metric {
+      min-height: 9rem;
+      padding: 1rem 0 0;
+      border-top: 3px solid var(--navy);
+    }
+
+    .metric-value {
+      display: block;
+      margin: 0.45rem 0 0.3rem;
+      color: var(--navy);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 750;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .metric-note {
+      margin-bottom: 0;
+      color: var(--ink-muted);
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .section { padding-top: 3.5rem; }
+
+    .section-heading {
+      align-items: flex-end;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-intro {
+      max-width: 55ch;
+      margin-bottom: 0;
+      color: var(--ink-muted);
+      font-size: 0.92rem;
+    }
+
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .delivery {
+      padding: 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: var(--surface);
+    }
+
+    .delivery.ready { border-top: 4px solid var(--green); }
+    .delivery.pending { border-top: 4px solid var(--blue); }
+
+    .status-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .status-label::before {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .ready .status-label { color: var(--green); }
+    .pending .status-label { color: var(--blue); }
+
+    .delivery ul,
+    .risk-list,
+    .next-list {
+      margin: 1rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .delivery li {
+      position: relative;
+      padding: 0.55rem 0 0.55rem 1.5rem;
+      border-top: 1px solid var(--line);
+      line-height: 1.45;
+    }
+
+    .delivery li::before {
+      position: absolute;
+      top: 0.66rem;
+      left: 0;
+      color: var(--green);
+      font-weight: 800;
+      content: "✓";
+    }
+
+    .pending li::before {
+      color: var(--blue);
+      content: "→";
+    }
+
+    .commit {
+      color: var(--ink-muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.78rem;
+    }
+
+    .tech-panel {
+      overflow: hidden;
+      border-radius: 1rem;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .tech-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.15rem 1.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .tech-panel-head strong {
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    .runtime {
+      color: rgba(255, 255, 255, 0.72);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.75rem;
+    }
+
+    .architecture-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 2rem;
+      margin: 0;
+      padding: clamp(1.4rem, 3vw, 2rem);
+      list-style: none;
+    }
+
+    .architecture-step {
+      position: relative;
+      min-height: 9.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 0.8rem;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 1rem;
+    }
+
+    .architecture-step:not(:last-child)::after {
+      position: absolute;
+      top: 50%;
+      right: -1.45rem;
+      color: rgba(255, 255, 255, 0.62);
+      content: "→";
+      font-size: 1.1rem;
+      transform: translateY(-50%);
+    }
+
+    .architecture-number {
+      display: block;
+      margin-bottom: 1.2rem;
+      color: #9bc9e8;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.76rem;
+    }
+
+    .architecture-step strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 1rem;
+    }
+
+    .architecture-step span:last-child {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .trust-control {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.35rem 1rem;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(23, 105, 170, 0.22);
+      padding: 1.2rem 1.4rem;
+    }
+
+    .trust-control .status-label {
+      grid-row: 1 / span 2;
+      margin: 0;
+      color: #aee6cf;
+      white-space: nowrap;
+    }
+
+    .trust-control strong { font-size: 0.96rem; }
+
+    .trust-control p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 1.25rem;
+    }
+
+    .stack-group {
+      padding-top: 0.9rem;
+      border-top: 3px solid var(--line-strong);
+    }
+
+    .stack-group:first-child { border-color: var(--blue); }
+
+    .stack-group h3 { margin-bottom: 0.7rem; }
+
+    .stack-group p {
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 0.84rem;
+      line-height: 1.55;
+    }
+
+    .stack-group strong {
+      color: var(--ink);
+      font-weight: 750;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(17rem, 0.95fr);
+      align-items: stretch;
+    }
+
+    .catalog-visual,
+    .catalog-detail {
+      padding: clamp(1.25rem, 3vw, 2rem);
+      border: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .catalog-visual {
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      align-items: center;
+      gap: 2rem;
+      border-radius: 1rem 0 0 1rem;
+    }
+
+    .catalog-detail {
+      border-left: 0;
+      border-radius: 0 1rem 1rem 0;
+    }
+
+    .donut {
+      position: relative;
+      display: grid;
+      width: 10rem;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--green) 0 12.5%,
+        var(--line) 12.5% 50%,
+        var(--blue) 50% 100%
+      );
+    }
+
+    .donut::after {
+      position: absolute;
+      width: 6.6rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--surface);
+      content: "";
+    }
+
+    .donut-value {
+      position: relative;
+      z-index: 1;
+      color: var(--navy);
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .legend {
+      display: grid;
+      gap: 0.85rem;
+    }
+
+    .legend-item {
+      display: grid;
+      grid-template-columns: 0.7rem 1fr auto;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .swatch {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 0.15rem;
+      background: var(--line);
+    }
+
+    .swatch.open { background: var(--green); }
+    .swatch.verify { background: var(--line-strong); }
+    .swatch.reference { background: var(--blue); }
+
+    .legend-value {
+      color: var(--navy);
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .review-meter { margin-top: 1.5rem; }
+
+    .meter-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.55rem;
+      font-size: 0.84rem;
+    }
+
+    .meter-track {
+      height: 0.7rem;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--line);
+    }
+
+    .meter-fill {
+      width: 50%;
+      height: 100%;
+      background: var(--amber);
+    }
+
+    .catalog-callout {
+      margin: 1.25rem 0 0;
+      border-left: 4px solid var(--amber);
+      background: var(--amber-soft);
+      padding: 0.9rem 1rem;
+      color: #66430f;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .catalog-detail dl {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0;
+      margin: 0;
+    }
+
+    .catalog-detail dt,
+    .catalog-detail dd {
+      margin: 0;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .catalog-detail dt { color: var(--ink-muted); }
+    .catalog-detail dd { font-weight: 800; }
+
+    .catalog-detail p {
+      margin: 1rem 0 0;
+      color: var(--ink-muted);
+      font-size: 0.87rem;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 2rem;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .risk {
+      display: grid;
+      grid-template-columns: 3.6rem 1fr;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .priority {
+      display: grid;
+      width: 3.25rem;
+      height: 3.25rem;
+      place-items: center;
+      align-self: start;
+      border-radius: 50%;
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .priority.high {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .risk p {
+      margin-bottom: 0;
+      color: var(--ink-muted);
+      font-size: 0.9rem;
+    }
+
+    .next-list { counter-reset: actions; }
+
+    .next-list li {
+      counter-increment: actions;
+      display: grid;
+      grid-template-columns: 3rem 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .next-list li::before {
+      color: var(--line-strong);
+      font-size: 1.8rem;
+      font-weight: 800;
+      content: "0" counter(actions);
+      letter-spacing: -0.05em;
+    }
+
+    .action-copy strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--navy);
+    }
+
+    .action-copy span {
+      color: var(--ink-muted);
+      font-size: 0.88rem;
+    }
+
+    .tag {
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      padding: 0.45rem 0.7rem;
+      font-size: 0.78rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .tag.critical {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    details {
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 1rem 0;
+      color: var(--navy);
+      font-weight: 750;
+    }
+
+    .source-list {
+      margin: 0 0 1.25rem;
+      padding-left: 1.25rem;
+      color: var(--ink-muted);
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    footer {
+      padding-top: 1.5rem;
+      color: var(--ink-muted);
+      font-size: 0.82rem;
+    }
+
+    footer p { margin-bottom: 0; }
+
+    @media (max-width: 880px) {
+      .snapshot { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .architecture-flow,
+      .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .architecture-step:nth-child(2)::after { display: none; }
+      .split { grid-template-columns: 1fr; }
+      .catalog-visual { border-radius: 1rem 1rem 0 0; }
+      .catalog-detail {
+        border-top: 0;
+        border-left: 1px solid var(--line);
+        border-radius: 0 0 1rem 1rem;
+      }
+      .risk-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .shell {
+        width: min(100% - 1.25rem, 1180px);
+        padding-top: 1rem;
+      }
+      .topbar,
+      .hero-heading,
+      .section-heading,
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .top-actions { width: 100%; }
+      .button { flex: 1; }
+      .health { align-self: flex-start; }
+      .delivery-grid { grid-template-columns: 1fr; }
+      .tech-panel-head,
+      .trust-control {
+        align-items: flex-start;
+        grid-template-columns: 1fr;
+      }
+      .tech-panel-head { flex-direction: column; }
+      .trust-control .status-label { grid-row: auto; }
+      .catalog-visual {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+      .legend { width: 100%; }
+      .next-list li { grid-template-columns: 2.5rem 1fr; }
+      .next-list .tag {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 440px) {
+      .snapshot { grid-template-columns: 1fr; }
+      .metric { min-height: 0; }
+      .top-actions { flex-direction: column; }
+      .button { width: 100%; }
+      .architecture-flow,
+      .stack-grid { grid-template-columns: 1fr; }
+      .architecture-step { min-height: 0; }
+      .architecture-step:not(:last-child)::after {
+        top: auto;
+        right: 50%;
+        bottom: -1.55rem;
+        transform: translateX(50%) rotate(90deg);
+      }
+      .architecture-number { margin-bottom: 0.65rem; }
+      .risk { grid-template-columns: 3rem 1fr; }
+      .priority {
+        width: 2.7rem;
+        height: 2.7rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+    }
+
+    @media print {
+      @page { margin: 1.2cm; }
+      body { background: #fff; }
+      .shell {
+        width: 100%;
+        padding: 0;
+      }
+      .top-actions,
+      .skip-link { display: none; }
+      .hero,
+      .delivery,
+      .tech-panel,
+      .catalog-visual,
+      .catalog-detail { box-shadow: none; }
+      .section { padding-top: 1.8rem; }
+      a { color: inherit; }
+      .risk,
+      .delivery,
+      .catalog-visual,
+      .catalog-detail,
+      .next-list li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <main class="shell" id="contenido">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">AP</span>
+        <span>Asistente de Proyectos Chile</span>
+      </div>
+      <div class="top-actions" aria-label="Acciones del informe">
+        <a class="button" href="https://asistproy.up.railway.app" target="_blank" rel="noreferrer">Abrir aplicación</a>
+        <button class="button" type="button" onclick="window.print()">Imprimir / PDF</button>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="titulo">
+      <div class="hero-heading">
+        <div>
+          <p class="eyebrow">Estado ejecutivo · 12 septiembre 2026</p>
+          <h1 id="titulo">Piloto funcional, con orientación contextual ya publicada.</h1>
+          <p class="hero-copy">
+            El producto ya permite convertir una idea inicial en un proyecto organizado, relacionarlo con instrumentos reales y preparar antecedentes mediante checklists y rutas guiadas. La principal brecha inmediata es la vigencia editorial del catálogo.
+          </p>
+        </div>
+        <span class="health">Producción actualizada</span>
+      </div>
+
+      <div class="snapshot" aria-label="Indicadores principales">
+        <article class="metric">
+          <span class="metric-label">Catálogo nacional piloto</span>
+          <strong class="metric-value">8</strong>
+          <p class="metric-note">Instrumentos versionados de Sercotec, Corfo, FOSIS y Duoc UC.</p>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Convocatoria abierta</span>
+          <strong class="metric-value">1</strong>
+          <p class="metric-note">All In Chile 2026, con cierre informado para el 27 de septiembre.</p>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Rutas guiadas</span>
+          <strong class="metric-value">2</strong>
+          <p class="metric-note">Capital Semilla Modo Empleo Atacama y All In Chile 2026.</p>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Registros por revisar</span>
+          <strong class="metric-value">4</strong>
+          <p class="metric-note">La fecha interna de revisión ya venció; requieren comprobación editorial.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="entregas">
+      <div class="section-heading">
+        <div>
+          <p class="micro">Estado de entrega</p>
+          <h2 id="entregas">Qué está publicado y qué se verificó</h2>
+        </div>
+        <p class="section-intro">La separación evita confundir código terminado con capacidades que una persona ya puede usar en Railway.</p>
+      </div>
+
+      <div class="delivery-grid">
+        <article class="delivery ready">
+          <div class="delivery-head">
+            <div>
+              <span class="status-label">Publicado en producción</span>
+              <h3>Flujo principal para personas principiantes</h3>
+            </div>
+            <span class="commit">origin/main · 22e9004</span>
+          </div>
+          <ul>
+            <li>Registro, ingreso y persistencia separada por usuario.</li>
+            <li>Creación de proyectos desde una descripción libre.</li>
+            <li>Antecedentes confirmados, corregidos o pendientes.</li>
+            <li>Catálogo público, filtros y selección de apoyos.</li>
+            <li>Checklist transversal y por convocatoria.</li>
+            <li>Rutas de preparación de seis etapas para dos instrumentos.</li>
+            <li>Límites explícitos: no evalúa, postula ni garantiza adjudicación.</li>
+          </ul>
+        </article>
+
+        <article class="delivery ready">
+          <div class="delivery-head">
+            <div>
+              <span class="status-label">Publicado el 12 de septiembre</span>
+              <h3>Orientación contextual para requisitos All In</h3>
+            </div>
+            <span class="commit">main · 840e5be</span>
+          </div>
+          <ul>
+            <li>Ayuda específica para perfil, problema inicial y comprobante.</li>
+            <li>Panel accesible “Ver orientación” sin alterar borradores.</li>
+            <li>Resolución segura según versión de la convocatoria.</li>
+            <li>123 pruebas unitarias y de componentes aprobadas.</li>
+            <li>10 recorridos E2E aprobados en escritorio y móvil.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="tecnologia">
+      <div class="section-heading">
+        <div>
+          <p class="micro">Tecnología y arquitectura</p>
+          <h2 id="tecnologia">Un monolito modular, trazable y preparado para el piloto</h2>
+        </div>
+        <p class="section-intro">La aplicación separa experiencia, reglas y datos para que los requisitos oficiales puedan actualizarse sin rehacer el producto.</p>
+      </div>
+
+      <div class="tech-panel">
+        <div class="tech-panel-head">
+          <strong>Flujo técnico principal</strong>
+          <span class="runtime">Node.js 24 · Next.js App Router</span>
+        </div>
+
+        <ol class="architecture-flow" aria-label="Flujo técnico principal">
+          <li class="architecture-step">
+            <span class="architecture-number">01 · Experiencia</span>
+            <strong>Interfaz web</strong>
+            <span>Next.js 16, React 19 y Tailwind CSS 4.</span>
+          </li>
+          <li class="architecture-step">
+            <span class="architecture-number">02 · Aplicación</span>
+            <strong>Rutas y acciones</strong>
+            <span>App Router, Server Actions y API de autenticación.</span>
+          </li>
+          <li class="architecture-step">
+            <span class="architecture-number">03 · Reglas</span>
+            <strong>Servicios y dominio</strong>
+            <span>Extracción conservadora, matching, checklists y Zod.</span>
+          </li>
+          <li class="architecture-step">
+            <span class="architecture-number">04 · Persistencia</span>
+            <strong>Datos versionados</strong>
+            <span>SQLite para usuarios y proyectos; JSON para convocatorias.</span>
+          </li>
+        </ol>
+
+        <div class="trust-control">
+          <span class="status-label">Control de confianza</span>
+          <strong>La clasificación es determinística y auditable.</strong>
+          <p>La aplicación no usa IA generativa para inventar, alterar o completar requisitos oficiales.</p>
+        </div>
+      </div>
+
+      <div class="stack-grid" aria-label="Resumen del stack tecnológico">
+        <article class="stack-group">
+          <h3>Producto</h3>
+          <p><strong>TypeScript</strong> estricto · React 19 · Tailwind CSS 4 · Manrope · Lucide.</p>
+        </article>
+        <article class="stack-group">
+          <h3>Identidad y datos</h3>
+          <p><strong>Better Auth</strong> · better-sqlite3 · SQLite con WAL · Zod.</p>
+        </article>
+        <article class="stack-group">
+          <h3>Calidad</h3>
+          <p><strong>Vitest</strong> · Testing Library · Playwright · ESLint · comprobación de tipos.</p>
+        </article>
+        <article class="stack-group">
+          <h3>Operación</h3>
+          <p><strong>Railway</strong> · volumen persistente · una réplica · respaldos manuales.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="catalogo">
+      <div class="section-heading">
+        <div>
+          <p class="micro">Vigencia de información</p>
+          <h2 id="catalogo">Catálogo: útil como piloto, todavía no como cobertura nacional completa</h2>
+        </div>
+      </div>
+
+      <div class="split">
+        <div class="catalog-visual">
+          <div class="donut" role="img" aria-label="De ocho instrumentos: uno abierto, tres por verificar y cuatro cerrados o de referencia">
+            <span class="donut-value">8</span>
+          </div>
+          <div class="legend" aria-label="Composición del catálogo">
+            <div class="legend-item">
+              <span class="swatch open" aria-hidden="true"></span>
+              <span>Abierto</span>
+              <span class="legend-value">1</span>
+            </div>
+            <div class="legend-item">
+              <span class="swatch verify" aria-hidden="true"></span>
+              <span>Por verificar</span>
+              <span class="legend-value">3</span>
+            </div>
+            <div class="legend-item">
+              <span class="swatch reference" aria-hidden="true"></span>
+              <span>Cerrado / referencia</span>
+              <span class="legend-value">4</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="catalog-detail">
+          <dl>
+            <dt>Revisión editorial vigente</dt>
+            <dd>4 / 8</dd>
+            <dt>Revisión editorial vencida</dt>
+            <dd>4 / 8</dd>
+            <dt>Organizaciones cubiertas</dt>
+            <dd>4</dd>
+            <dt>Actualización automática</dt>
+            <dd>No</dd>
+          </dl>
+          <div class="review-meter">
+            <div class="meter-head">
+              <span>Salud editorial</span>
+              <strong>50%</strong>
+            </div>
+            <div class="meter-track" role="progressbar" aria-label="Registros con fecha de revisión vigente" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+              <div class="meter-fill"></div>
+            </div>
+          </div>
+          <p class="catalog-callout"><strong>Lectura correcta:</strong> el sistema demuestra cómo centralizar y reutilizar antecedentes. No demuestra todavía que represente toda la oferta pública vigente en Chile.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="riesgos">
+      <div class="section-heading">
+        <div>
+          <p class="micro">Brechas y controles</p>
+          <h2 id="riesgos">Cuatro asuntos condicionan el siguiente ciclo</h2>
+        </div>
+      </div>
+
+      <div class="risk-grid">
+        <article class="risk">
+          <span class="priority high">P0</span>
+          <div>
+            <h3>Confianza y vigencia del catálogo</h3>
+            <p>La revisión es manual y cuatro registros están vencidos. Se debe diferenciar claramente fecha de revisión, cobertura y disponibilidad.</p>
+          </div>
+        </article>
+        <article class="risk">
+          <span class="priority">P1</span>
+          <div>
+            <h3>Cobertura de la orientación contextual</h3>
+            <p>El piloto cubre tres requisitos revisados de All In. La ampliación debe mantener trazabilidad editorial y control por versión.</p>
+          </div>
+        </article>
+        <article class="risk">
+          <span class="priority">P1</span>
+          <div>
+            <h3>Continuidad y respaldos</h3>
+            <p>La aplicación usa SQLite en un volumen persistente y una réplica. Los respaldos siguen siendo manuales.</p>
+          </div>
+        </article>
+        <article class="risk">
+          <span class="priority">P1</span>
+          <div>
+            <h3>Validación con usuarios reales</h3>
+            <p>Falta medir si una persona sin experiencia comprende la recomendación, avanza y distingue orientación de evaluación.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="acciones">
+      <div class="section-heading">
+        <div>
+          <p class="micro">Próximas decisiones</p>
+          <h2 id="acciones">Plan inmediato recomendado</h2>
+        </div>
+      </div>
+
+      <ol class="next-list">
+        <li>
+          <div class="action-copy">
+            <strong>Actualizar los cuatro instrumentos con revisión vencida</strong>
+            <span>Contrastar cada ficha con su fuente oficial y registrar responsable, fecha y evidencia.</span>
+          </div>
+          <span class="tag critical">Antes de ampliar pruebas</span>
+        </li>
+        <li>
+          <div class="action-copy">
+            <strong>Ampliar la orientación solo después de medir el piloto</strong>
+            <span>Usar la prueba con principiantes para decidir qué requisitos necesitan explicación adicional.</span>
+          </div>
+          <span class="tag">Después del piloto</span>
+        </li>
+        <li>
+          <div class="action-copy">
+            <strong>Probar con cinco personas que financian su primera aplicación</strong>
+            <span>Observar creación, selección de oportunidad, checklist y comprensión de límites.</span>
+          </div>
+          <span class="tag">Siguiente aprendizaje</span>
+        </li>
+        <li>
+          <div class="action-copy">
+            <strong>Formalizar respaldo y recuperación</strong>
+            <span>Definir frecuencia, retención, responsable y ensayo de restauración de la base de datos.</span>
+          </div>
+          <span class="tag">Operación</span>
+        </li>
+      </ol>
+    </section>
+
+    <details>
+      <summary>Fuentes y alcance de este estado</summary>
+      <ul class="source-list">
+        <li>Aplicación publicada en Railway, revisada el 12 de septiembre de 2026.</li>
+        <li>Catálogo local validado con <code>npm run catalog:check</code>.</li>
+        <li>Producción en <code>main</code>, merge <code>840e5be</code> mediante pull request.</li>
+        <li>Documentación de operación, catálogo y auditoría disponible en el repositorio.</li>
+        <li>Los conteos expresan el contenido del piloto; no equivalen a un catastro nacional exhaustivo.</li>
+      </ul>
+    </details>
+
+    <footer>
+      <div class="footer-row">
+        <p>Documento de seguimiento interno · no contiene información personal ni secretos.</p>
+        <p>Próxima revisión recomendada: después de actualizar el catálogo y realizar el piloto con usuarios.</p>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
